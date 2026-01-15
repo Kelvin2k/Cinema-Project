@@ -4,15 +4,11 @@ import { Rate, Tabs } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 
-// Import ảnh tĩnh thay vì require.context
-const images = {
-  "1.jpeg": require("./../../assets/Film Poster/1.jpeg"),
-  // Thêm các ảnh khác nếu cần
-};
+// Import tất cả ảnh tĩnh
+import pic1 from "./../../assets/Film Poster/1.jpeg";
 
-const getImageByName = (name) => {
-  return images[name] || images["1.jpeg"]; // fallback to default
-};
+// Nếu bạn có nhiều ảnh, import thêm và thêm vào mảng này
+const imageList = [pic1]; // Thay thế bằng danh sách ảnh của bạn
 
 const CinemaShowTime = ({ cinemaCode }) => {
   const [cinemaDetail, setCinemaDetail] = useState([]);
@@ -31,7 +27,6 @@ const CinemaShowTime = ({ cinemaCode }) => {
   const renderFilmShowTime = () => {
     console.log("hello");
   };
-  const imageKeys = images.keys();
 
   return (
     <div className="">
@@ -60,9 +55,8 @@ const CinemaShowTime = ({ cinemaCode }) => {
                 {/* <img src={pic1} alt="" /> */}
 
                 {theater.danhSachPhim?.slice(0, 5).map((film, index) => {
-                  const randomIndex = Math.floor(Math.random() * 11 + 1);
-                  let randomKey = imageKeys[randomIndex];
-                  let randomImage = images(randomKey);
+                  // Dùng ảnh mặc định hoặc random từ imageList
+                  const randomImage = imageList[0]; // hoặc imageList[Math.floor(Math.random() * imageList.length)]
 
                   return (
                     <div className="grid grid-cols-3 gap-x-2" key={index}>
