@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { filmServManagement } from "../../services/filmServManagement";
 import { Rate, Tabs } from "antd";
-import pic1 from "./../../assets/Film Poster/1.jpeg";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 
-const images = require.context(
-  "./../../assets/Film Poster/",
-  false,
-  /\.(png|jpe?g|svg)$/
-);
+// Import ảnh tĩnh thay vì require.context
+const images = {
+  "1.jpeg": require("./../../assets/Film Poster/1.jpeg"),
+  // Thêm các ảnh khác nếu cần
+};
+
+const getImageByName = (name) => {
+  return images[name] || images["1.jpeg"]; // fallback to default
+};
 
 const CinemaShowTime = ({ cinemaCode }) => {
   const [cinemaDetail, setCinemaDetail] = useState([]);
