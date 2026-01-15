@@ -3,7 +3,6 @@ import { filmServManagement } from "../../services/filmServManagement";
 import { Rate, Tabs } from "antd";
 import pic1 from "./../../assets/Film Poster/1.jpeg";
 import { Link } from "react-router-dom";
-import { render } from "@testing-library/react";
 import dayjs from "dayjs";
 
 const images = require.context(

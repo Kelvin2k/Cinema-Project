@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { filmServManagement } from "../../services/filmServManagement";
 import { Flex, message, Popconfirm, Space, Table, Tag } from "antd";
-import { render } from "@testing-library/react";
 import { getLocalStorage } from "../../utils/local";
 import useMessage from "antd/es/message/useMessage";
 import { useDispatch, useSelector } from "react-redux";
