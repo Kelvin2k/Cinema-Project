@@ -3,12 +3,48 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Flex, Space, Table, Tag } from "antd";
 import { userServ } from "../../services/userServ";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import "./UserManger.css";
 import Manager_AddUser from "./Manager_AddUser";
 import Manager_UpdateUser from "./Manager_UpdateUser";
+import { Button, message, Popconfirm } from "antd";
 
 const UserManager = () => {
+  const [messageApi, holder] = message.useMessage();
+  const [messageApiPopConfirm, contextHolder] = message.useMessage();
+
+  const confirm = (e, taiKhoan) => {
+    console.log(e);
+    userServ
+      .removeUser(taiKhoan)
+      .then((result) => {
+        console.log("result", result);
+        messageApiPopConfirm.success({
+          content: "Delete User Successfully",
+        });
+        userServ
+          .fetchUserDataList()
+          .then((result) => {
+            console.log("result", result.data.content);
+
+            setUserList(result.data.content);
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
+      })
+      .catch((err) => {
+        console.log("err", err);
+        messageApiPopConfirm.error({
+          content: err.response.data.message,
+        });
+      });
+  };
+  const cancel = (e) => {
+    console.log(e);
+    messageApi.error("Click on No");
+  };
+
   const [userList, setUserList] = useState([]);
   const [searchInputValue, setSearchInputValue] = useState("");
   useEffect(() => {
@@ -64,29 +100,18 @@ const UserManager = () => {
       width: "100px",
       render: (_, record) => (
         <div className="space-x-2">
-          <i
-            className="fa-solid fa-trash text-red-500 text-lg cursor-pointer hover:text-xl duration-200"
-            onClick={() => {
-              console.log("record", record.taiKhoan);
-              userServ
-                .removeUser(record.taiKhoan)
-                .then((result) => {
-                  console.log("result", result);
-                  userServ
-                    .fetchUserDataList()
-                    .then((result) => {
-                      console.log("result", result.data.content);
-                      setUserList(result.data.content);
-                    })
-                    .catch((err) => {
-                      console.log("err", err);
-                    });
-                })
-                .catch((err) => {
-                  console.log("err", err);
-                });
+          <Popconfirm
+            title="Delete the task"
+            description="Are you sure to delete this user?"
+            onConfirm={(e) => {
+              confirm(e, record.taiKhoan);
             }}
-          ></i>
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <i className="fa-solid fa-trash text-red-500 text-lg cursor-pointer hover:text-xl duration-200"></i>
+          </Popconfirm>
           <i
             className="fa-solid fa-pen-to-square text-lime-700 text-lg cursor-pointer hover:text-xl duration-200"
             onClick={() => {
@@ -132,6 +157,7 @@ const UserManager = () => {
 
   return (
     <>
+      {contextHolder}
       <div className="container mx-auto">
         <form
           className="w-full mt-5 mx-auto"

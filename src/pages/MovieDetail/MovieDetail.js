@@ -26,6 +26,8 @@ const MovieDetail = () => {
       })
       .catch((err) => {
         console.log("err", err);
+        dispatch(endedLoading());
+        navigate("/*");
       });
   }, []);
 

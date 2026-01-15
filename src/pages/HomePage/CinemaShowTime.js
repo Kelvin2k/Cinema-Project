@@ -3,25 +3,25 @@ import { filmServManagement } from "../../services/filmServManagement";
 import { Rate, Tabs } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
-
-// Import tất cả ảnh tĩnh
-import pic1 from "./../../assets/Film Poster/1.jpeg";
-
-// Nếu bạn có nhiều ảnh, import thêm và thêm vào mảng này
-const imageList = [pic1]; // Thay thế bằng danh sách ảnh của bạn
+import { useDispatch } from "react-redux";
+import { endedLoading, startedLoading } from "../../redux/Slice/loadingSlice";
 
 const CinemaShowTime = ({ cinemaCode }) => {
   const [cinemaDetail, setCinemaDetail] = useState([]);
   const [filmDetail, setFilmDetail] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(startedLoading());
     filmServManagement
       .getCinemaShowTime(cinemaCode)
       .then((result) => {
         setCinemaDetail(result.data.content[0].lstCumRap);
+        dispatch(endedLoading());
       })
       .catch((err) => {
         console.log("err", err);
+        dispatch(endedLoading());
       });
   }, []);
   const renderFilmShowTime = () => {
@@ -49,19 +49,13 @@ const CinemaShowTime = ({ cinemaCode }) => {
               </div>
             ),
             key: theater.maCumRap,
-            // disabled: i === 28,
             children: (
               <div className="space-y-5">
-                {/* <img src={pic1} alt="" /> */}
-
                 {theater.danhSachPhim?.slice(0, 5).map((film, index) => {
-                  // Dùng ảnh mặc định hoặc random từ imageList
-                  const randomImage = imageList[0]; // hoặc imageList[Math.floor(Math.random() * imageList.length)]
-
                   return (
                     <div className="grid grid-cols-3 gap-x-2" key={index}>
                       <img
-                        src={randomImage}
+                        src={film.hinhAnh}
                         alt=""
                         className="w-full object-cover col-span-1"
                       />
@@ -84,8 +78,11 @@ const CinemaShowTime = ({ cinemaCode }) => {
                               ).format("HH:mm");
                               return (
                                 <div className="mt-2 col-span-1" key={index}>
-                                  <Link to={"/"} className="">
-                                    <p className="rounded-sm! bg-gray-100! text-green-500! w-fit! px-2! py-1!">
+                                  <Link
+                                    to={`/detail_movie/${film.maPhim}`}
+                                    className=""
+                                  >
+                                    <p className="rounded-sm! bg-gray-100! text-green-500! w-fit! px-2! py-1! cursor-pointer">
                                       {formattedDate} ~
                                       <span className="text-red-500 ml-1">
                                         {formattedTime}

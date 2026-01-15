@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { cinemaSchedule } from "../../services/cinemaSchedule";
 import { Button, message } from "antd";
 import { useDispatch } from "react-redux";
@@ -17,6 +17,7 @@ const BookingTicket = () => {
   const [total, setTotal] = useState(0);
   const [messageApi, contextHolder] = message.useMessage();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const success = () => {
     messageApi.open({
@@ -49,9 +50,12 @@ const BookingTicket = () => {
         console.log("result", result.data.content);
         setSeatLayout(result.data.content.danhSachGhe);
         setmovieInfo(result.data.content.thongTinPhim);
+        dispatch(endedLoading());
       })
       .catch((err) => {
         console.log("err", err);
+        dispatch(endedLoading());
+        navigate("/*");
       });
   }, []);
   useEffect(() => {

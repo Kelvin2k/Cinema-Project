@@ -66,6 +66,7 @@ const Banner = () => {
         dispatch(endedLoading());
       } catch (error) {
         console.log("error", error);
+        dispatch(startedLoading());
       }
     };
     fetchBanners();
