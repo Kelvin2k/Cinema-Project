@@ -13,6 +13,7 @@ import SignUp from "./pages/Sign Up/SignUp";
 import EditMovie from "./pages/Edit Movie/EditMovie";
 import UserPage from "./pages/User Page/UserPage";
 import AddUser from "./pages/Add User/AddUser";
+import Page404 from "./pages/Page404/Page404";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route element={<AddUser />} path="add_user"></Route>
         </Route>
         <Route element={<Login />} path="/login"></Route>
+        <Route element={<Page404 />} path="*"></Route>
       </Routes>
     </>
   );
