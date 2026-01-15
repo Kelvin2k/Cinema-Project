@@ -7,7 +7,7 @@ const Page404 = () => {
     loop: true,
     autoplay: true,
     animationData: animation404,
-    style: { height: 400, width: "100%" },
+    style: { height: 400 },
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
