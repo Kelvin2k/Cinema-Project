@@ -97,7 +97,7 @@ const Header = () => {
           </button>
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="flex lg:flex lg:flex-1 lg:justify-end">
           {userName ? (
             <p
               className="text-emerald-600 cursor-pointer hover:text-lg hover:text-emerald-800 uppercase duration-200"
