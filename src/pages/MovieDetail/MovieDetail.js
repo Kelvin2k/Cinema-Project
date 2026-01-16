@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { cinemaSchedule } from "../../services/cinemaSchedule";
-import { Radio, Rate, Tabs } from "antd";
-import { filmServManagement } from "../../services/filmServManagement";
+import { Tabs } from "antd";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { endedLoading, startedLoading } from "../../redux/Slice/loadingSlice";
