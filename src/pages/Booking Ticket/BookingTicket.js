@@ -113,9 +113,9 @@ const BookingTicket = () => {
     <div>
       {contextHolder}
 
-      <div className="content container mx-auto grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-20 my-10 px-2 sm:px-4">
+      <div className="content container mx-auto grid grid-cols-5 gap-x-20 my-10">
         <div
-          className="seat_booking grid grid-cols-10 lg:col-span-3 gap-2 p-3 sm:p-5 rounded-2xl"
+          className="seat_booking grid grid-cols-10 col-span-3 gap-2 p-5 rounded-2xl"
           style={{
             boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
           }}
@@ -213,7 +213,7 @@ const BookingTicket = () => {
           </div>
         </div>
         <div
-          className="provisional_invoice p-4 sm:p-6 lg:p-10 rounded-lg lg:col-span-2"
+          className="provisional_invoice p-10 rounded-lg col-span-2"
           style={{
             boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
           }}
@@ -276,13 +276,13 @@ const BookingTicket = () => {
                 }}
               >
                 <div className="mx-auto max-w-3xl p-5 ">
-                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-5 text-center uppercase">
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-5 text-center uppercase">
                     Provisional Invoice
                   </h2>
                   <img
                     src={movieInfo.hinhAnh}
                     alt=""
-                    className="w-full sm:w-3/4 h-48 sm:h-64 lg:h-96 object-cover container mx-auto rounded-lg"
+                    className="w-3/4 h-96 object-cover container mx-auto rounded-lg"
                   />
                   <div className="mt-6 sm:mt-8">
                     <div className="relative overflow-x-auto border-b border-gray-200 dark:border-gray-800">
