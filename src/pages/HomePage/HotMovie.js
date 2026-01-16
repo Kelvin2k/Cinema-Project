@@ -19,14 +19,6 @@ const HotMovie = () => {
     setSelectedMovie(movie);
     setIsModalOpen(true);
   };
-  const contentStyle_unused = {
-    margin: 0,
-    minHeight: "300px",
-    color: "#fff",
-    lineHeight: "160px",
-    textAlign: "center",
-    background: "#364d79",
-  };
   useEffect(() => {
     filmServManagement
       .getMovieList()

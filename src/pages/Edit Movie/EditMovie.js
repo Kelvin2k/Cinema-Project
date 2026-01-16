@@ -1,6 +1,5 @@
 import {
   DatePicker,
-  message,
   notification,
   Rate,
   Switch,
@@ -116,6 +115,7 @@ const EditMovie = () => {
         console.log("err", err);
         navigate("/*");
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieId, navigate]);
 
   console.log("values", values);

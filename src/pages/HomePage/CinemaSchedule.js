@@ -31,7 +31,7 @@ const CinemaSchedule = () => {
           //   style={{ height: 220 }}
           items={cinema?.map((item, index) => {
             return {
-              label: <img src={item.logo} className="w-20" />,
+              label: <img src={item.logo} className="w-20" alt={item.tenHeThongRap || "Cinema logo"} />,
               key: item.maHeThongRap,
               // disabled: i === 28,
               children: <CinemaShowTime cinemaCode={item.maHeThongRap} />,
