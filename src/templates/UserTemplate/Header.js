@@ -144,51 +144,34 @@ const Header = () => {
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-200">
           <div className="space-y-1 px-6 pb-6 pt-4">
-            <NavLink
-              to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive
-                  ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
-                  : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-              }
+            <button className="block hover:bg-gray-100 rounded-md px-2 py-1 w-full text-left duration-200">
+              <NavLink
+                className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200"
+                to={"/"}
+              >
+                Home Page
+              </NavLink>
+            </button>
+
+            <button
+              className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600 block hover:bg-gray-100 rounded-md px-2 py-1 w-full text-left duration-200"
+              onClick={(e) => goToSection("now_showing", e)}
             >
-              Home Page
-            </NavLink>
-            <NavLink
-              to="/cinema"
-              onClick={() => setMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive
-                  ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
-                  : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-              }
+              Hot Movie
+            </button>
+            <button
+              className="text-sm/6 font-semibold text-gray-900 cursor-pointer w-full text-left hover:text-gray-600 block hover:bg-gray-100 rounded-md px-2 py-1"
+              onClick={(e) => goToSection("hot_movie", e)}
             >
-              Cinema
-            </NavLink>
-            <NavLink
-              to="/news"
-              onClick={() => setMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive
-                  ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
-                  : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-              }
+              Now Showing
+            </button>
+            <button
+              className="text-sm/6 font-semibold text-gray-900 cursor-pointer w-full text-left hover:text-gray-600 block hover:bg-gray-100 rounded-md px-2 py-1"
+              onClick={(e) => goToSection("new_release", e)}
             >
-              News
-            </NavLink>
-            <NavLink
-              to="/application"
-              onClick={() => setMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive
-                  ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
-                  : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-              }
-            >
-              Application
-            </NavLink>
-            <div className="border-t border-gray-200 pt-4 mt-4">
+              New Release
+            </button>
+            <div>
               {userName ? (
                 <div className="space-y-2">
                   <p
@@ -217,7 +200,7 @@ const Header = () => {
                 <NavLink
                   to="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
+                  className="block rounded-lg px-2 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50"
                 >
                   Login / Sign up
                 </NavLink>
