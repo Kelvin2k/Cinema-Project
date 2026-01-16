@@ -77,7 +77,7 @@ const Header = () => {
           >
             Home Page
           </NavLink>
-          <button
+          {/* <button
             className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
             onClick={(e) => goToSection("now_showing", e)}
           >
@@ -94,7 +94,7 @@ const Header = () => {
             onClick={(e) => goToSection("new_release", e)}
           >
             New Release
-          </button>
+          </button> */}
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
