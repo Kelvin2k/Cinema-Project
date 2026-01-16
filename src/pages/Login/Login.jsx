@@ -98,7 +98,7 @@ const Login = () => {
   return (
     <>
       {contextHolder}
-      <div className="container mx-auto relative w-full md:h-[70vh] min-h-screen flex justify-center items-center px-4 py-8">
+      <div className="container mx-auto relative w-screen md:h-[70vh] h-screen flex justify-center items-center">
         {/* <div className="absolute top-100 right-96">
         {notification === "success" && (
           <div
@@ -211,8 +211,8 @@ const Login = () => {
         )}
       </div> */}
 
-        <div className="grid md:grid-cols-[2fr_3fr] grid-cols-1 gap-4 md:gap-8 w-full max-w-6xl">
-          <div className="col_left hidden md:block">
+        <div className="grid md:grid-cols-[2fr_3fr] grid-cols-1">
+          <div className="col_left">
             <Lottie {...defaultOptions} />
             {/* <Lottie options={defaultOptions} height={400} width={400} /> */}
             {/* <Lottie
@@ -222,9 +222,9 @@ const Login = () => {
             style={{ height: 400, width: 400 }}
           /> */}
           </div>
-          <div className="col_right p-4 sm:p-6 md:p-5">
+          <div className="col_right md:p-5 px-5">
             <form action="" onSubmit={handleSubmit}>
-              <h2 className="text-2xl sm:text-3xl font-bold capitalize">Login Movie</h2>
+              <h2 className="text-3xl font-bold capitalize">Login Movie</h2>
               <div className="flex flex-col space-y-5 mt-5">
                 <div>
                   <label
