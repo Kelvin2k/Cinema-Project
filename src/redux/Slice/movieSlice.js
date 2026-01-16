@@ -31,6 +31,6 @@ const movieSlice = createSlice({
   },
 });
 
-export const {} = movieSlice.actions;
+// export const {} = movieSlice.actions;
 
 export default movieSlice.reducer;

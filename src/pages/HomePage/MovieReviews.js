@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Carousel } from "antd";
-import { Card, Space } from "antd";
+import { Card } from "antd";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { reviewServ } from "../../services/reviewServ";
-import style from "./MovieReview.css";
+import "./MovieReview.css";
 
 const MovieReviews = () => {
-  const [movieId, setMovieId] = useState("");
   const [listReviews, setListReviews] = useState([]);
   const [listHotMovie, setListHotMovie] = useState([]);
 

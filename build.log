@@ -1,0 +1,169 @@
+
+> my-app@0.1.0 build
+> GENERATE_SOURCEMAP=false react-scripts build
+
+Creating an optimized production build...
+Compiled with warnings.
+
+[eslint] 
+src/pages/Edit Movie/EditMovie.js
+  Line 18:22:  'holder' is assigned a value but never used                                                                                             no-unused-vars
+  Line 19:9:   'confirm' is assigned a value but never used                                                                                            no-unused-vars
+  Line 23:9:   'cancel' is assigned a value but never used                                                                                             no-unused-vars
+  Line 87:5:   'resetForm' is assigned a value but never used                                                                                          no-unused-vars
+  Line 90:5:   'setValues' is assigned a value but never used                                                                                          no-unused-vars
+  Line 130:6:  React Hook useEffect has missing dependencies: 'formik', 'movieId', and 'navigate'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+src/pages/HomePage/Banner.js
+  Line 73:6:  React Hook useEffect has a missing dependency: 'dispatch'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/pages/HomePage/CinemaSchedule.js
+  Line 4:10:   'filmServManagement' is defined but never used                                                             no-unused-vars
+  Line 9:10:   'cinemaCode' is assigned a value but never used                                                            no-unused-vars
+  Line 9:22:   'setcinemaCode' is assigned a value but never used                                                         no-unused-vars
+  Line 36:22:  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+
+src/pages/HomePage/CinemaShowTime.js
+  Line 3:10:   'Rate' is defined but never used                                                                                                no-unused-vars
+  Line 11:10:  'filmDetail' is assigned a value but never used                                                                                 no-unused-vars
+  Line 11:22:  'setFilmDetail' is assigned a value but never used                                                                              no-unused-vars
+  Line 26:6:   React Hook useEffect has missing dependencies: 'cinemaCode' and 'dispatch'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+src/pages/HomePage/HotMovie.js
+  Line 2:10:  'Carousel' is defined but never used               no-unused-vars
+  Line 7:8:   'styles' is defined but never used                 no-unused-vars
+  Line 22:9:  'contentStyle' is assigned a value but never used  no-unused-vars
+
+src/pages/HomePage/MovieReviews.js
+  Line 2:10:   'Carousel' is defined but never used             no-unused-vars
+  Line 3:16:   'Space' is defined but never used                no-unused-vars
+  Line 8:8:    'style' is defined but never used                no-unused-vars
+  Line 11:10:  'movieId' is assigned a value but never used     no-unused-vars
+  Line 11:19:  'setMovieId' is assigned a value but never used  no-unused-vars
+
+src/pages/Login/Login.jsx
+  Line 1:17:   'useEffect' is defined but never used     no-unused-vars
+  Line 1:28:   'useState' is defined but never used      no-unused-vars
+  Line 7:10:   'userServ' is defined but never used      no-unused-vars
+  Line 9:10:   'Button' is defined but never used        no-unused-vars
+  Line 9:18:   'message' is defined but never used       no-unused-vars
+  Line 9:41:   'Space' is defined but never used         no-unused-vars
+  Line 12:21:  'saveInfoUser' is defined but never used  no-unused-vars
+
+src/pages/MovieDetail/MovieDetail.js
+  Line 2:10:  'Link' is defined but never used                                                                                                                 no-unused-vars
+  Line 4:10:  'Radio' is defined but never used                                                                                                                no-unused-vars
+  Line 4:17:  'Rate' is defined but never used                                                                                                                 no-unused-vars
+  Line 5:10:  'filmServManagement' is defined but never used                                                                                                   no-unused-vars
+  Line 32:6:  React Hook useEffect has missing dependencies: 'dispatch', 'navigate', and 'params.movieId'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+src/pages/MovieManager/MovieManager.js
+  Line 1:28:  'useState' is defined but never used                                                                         no-unused-vars
+  Line 4:3:   'Flex' is defined but never used                                                                             no-unused-vars
+  Line 8:3:   'Space' is defined but never used                                                                            no-unused-vars
+  Line 10:3:  'Tag' is defined but never used                                                                              no-unused-vars
+  Line 13:8:  'useMessage' is defined but never used                                                                       no-unused-vars
+  Line 80:6:  React Hook useEffect has a missing dependency: 'dispatch'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/pages/Sign Up/SignUp.js
+  Line 54:5:  'resetForm' is assigned a value but never used  no-unused-vars
+
+src/pages/User Manager/Manager_AddUser.js
+  Line 4:29:   'signUpValidation' is defined but never used               no-unused-vars
+  Line 6:10:   'saveLocalStore' is defined but never used                 no-unused-vars
+  Line 8:10:   'loginUser' is defined but never used                      no-unused-vars
+  Line 8:21:   'saveInfoUser' is defined but never used                   no-unused-vars
+  Line 9:10:   'message' is defined but never used                        no-unused-vars
+  Line 12:9:   'navigate' is assigned a value but never used              no-unused-vars
+  Line 14:10:  'showPasswordAgain' is assigned a value but never used     no-unused-vars
+  Line 14:29:  'setShowPasswordAgain' is assigned a value but never used  no-unused-vars
+  Line 15:9:   'dispatch' is assigned a value but never used              no-unused-vars
+  Line 64:5:   'resetForm' is assigned a value but never used             no-unused-vars
+
+src/pages/User Manager/Manager_UpdateUser.js
+  Line 5:3:    'addUserValidation' is defined but never used                                                                 no-unused-vars
+  Line 6:3:    'signUpValidation' is defined but never used                                                                  no-unused-vars
+  Line 10:10:  'saveLocalStore' is defined but never used                                                                    no-unused-vars
+  Line 12:10:  'loginUser' is defined but never used                                                                         no-unused-vars
+  Line 12:21:  'saveInfoUser' is defined but never used                                                                      no-unused-vars
+  Line 13:10:  'message' is defined but never used                                                                           no-unused-vars
+  Line 16:9:   'navigate' is assigned a value but never used                                                                 no-unused-vars
+  Line 18:10:  'showPasswordAgain' is assigned a value but never used                                                        no-unused-vars
+  Line 18:29:  'setShowPasswordAgain' is assigned a value but never used                                                     no-unused-vars
+  Line 19:9:   'dispatch' is assigned a value but never used                                                                 no-unused-vars
+  Line 74:5:   'resetForm' is assigned a value but never used                                                                no-unused-vars
+  Line 84:6:   React Hook useEffect has a missing dependency: 'setValues'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/pages/User Manager/UserManager.jsx
+  Line 1:24:    'Tabs' is defined but never used                                                                                                                                                                                                                                                                                                                                          no-unused-vars
+  Line 3:10:    'NavLink' is defined but never used                                                                                                                                                                                                                                                                                                                                       no-unused-vars
+  Line 4:10:    'Flex' is defined but never used                                                                                                                                                                                                                                                                                                                                          no-unused-vars
+  Line 4:30:    'Tag' is defined but never used                                                                                                                                                                                                                                                                                                                                           no-unused-vars
+  Line 13:22:   'holder' is assigned a value but never used                                                                                                                                                                                                                                                                                                                               no-unused-vars
+  Line 76:25:   The href attribute is required for an anchor to be keyboard accessible. Provide a valid, navigable address as the href value. If you cannot provide an href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  Line 213:15:  Imported JSX component Manager_AddUser must be in PascalCase or SCREAMING_SNAKE_CASE                                                                                                                                                                                                                                                                                      react/jsx-pascal-case
+  Line 229:15:  Imported JSX component Manager_UpdateUser must be in PascalCase or SCREAMING_SNAKE_CASE                                                                                                                                                                                                                                                                                   react/jsx-pascal-case
+
+src/pages/User Page/UpdateUserInformation.js
+  Line 51:5:  'handleReset' is assigned a value but never used                                                              no-unused-vars
+  Line 58:6:  React Hook useEffect has a missing dependency: 'setValues'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src/pages/User Page/UserPage.js
+  Line 46:6:   React Hook useEffect has missing dependencies: 'dispatch' and 'navigate'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  Line 66:26:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+
+src/redux/Slice/movieSlice.js
+  Line 34:14:  Unexpected empty object pattern  no-empty-pattern
+
+src/redux/Slice/userSlice.js
+  Line 4:3:  'isRejectedWithValue' is defined but never used  no-unused-vars
+
+src/templates/AdminTemplate/AdminTemplate.js
+  Line 5:3:   'UploadOutlined' is defined but never used                                                                                    no-unused-vars
+  Line 33:6:  React Hook useEffect has missing dependencies: 'navigate' and 'userInfo'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+src/templates/UserTemplate/Footer.js
+  Line 23:15:  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  Line 28:15:  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  Line 33:15:  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+  Line 38:15:  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+src/templates/UserTemplate/Header.js
+  Line 3:10:   'Link' is defined but never used                                                                                                                                                                                                                                                                                                                                   no-unused-vars
+  Line 40:11:  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+src/templates/UserTemplate/UserTemplate.js
+  Line 5:10:  'useDispatch' is defined but never used  no-unused-vars
+
+static/css/main.0ca9f38d.css from Css Minimizer plugin
+postcss-calc: /Users/quangle343/Desktop/IT-web/ReactJS/CapStoneDoAgain/my-app/static/css/main.0ca9f38d.css:1972:5: Lexical error on line 1: Unrecognized text.
+
+  Erroneous area:
+1: infinity * 1px
+^..^
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+File sizes after gzip:
+
+  560.09 kB  build/static/js/main.4a839d49.js
+  20.44 kB   build/static/css/main.1799e477.css
+
+The bundle size is significantly larger than recommended.
+Consider reducing it with code splitting: https://goo.gl/9VhYWB
+You can also analyze the project dependencies: https://goo.gl/LeUzfb
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+

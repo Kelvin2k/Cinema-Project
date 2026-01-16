@@ -1,16 +1,15 @@
-import { notification, Tabs } from "antd";
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { Flex, Space, Table, Tag } from "antd";
+import { Table } from "antd";
 import { userServ } from "../../services/userServ";
 import { Modal } from "antd";
 import "./UserManger.css";
 import Manager_AddUser from "./Manager_AddUser";
 import Manager_UpdateUser from "./Manager_UpdateUser";
-import { Button, message, Popconfirm } from "antd";
+import { Button, message, Popconfirm, Space } from "antd";
 
 const UserManager = () => {
-  const [messageApi, holder] = message.useMessage();
+  const [messageApi] = message.useMessage();
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, title = "", description = "") => {
     api[type]({

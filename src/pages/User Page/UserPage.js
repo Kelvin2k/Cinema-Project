@@ -43,7 +43,7 @@ const UserPage = () => {
         console.log("err", err);
         dispatch(endedLoading());
       });
-  }, []);
+  }, [dispatch, navigate]);
 
   return (
     <div className="min-h-screen pt-10 bg-white">
@@ -63,7 +63,7 @@ const UserPage = () => {
               key: index,
               children: (
                 <>
-                  {index == 0 ? (
+                  {index === 0 ? (
                     <UpdateUserInformation userData={userData} />
                   ) : (
                     // <div className="grid grid-cols-3">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { cinemaSchedule } from "../../services/cinemaSchedule";
-import { Button, message, Modal, notification } from "antd";
+import { Modal, notification } from "antd";
 import { useDispatch } from "react-redux";
 import { endedLoading, startedLoading } from "../../redux/Slice/loadingSlice";
 
@@ -10,7 +10,6 @@ const BookingTicket = () => {
 
   const params = useParams();
   const { showTimeId } = params;
-  const seat = new Array(160).fill("");
   const [seatLayout, setSeatLayout] = useState([]);
   const [movieInfo, setmovieInfo] = useState({});
   const [selectedSeat, setSelectedSeat] = useState([]);
@@ -103,7 +102,7 @@ const BookingTicket = () => {
         dispatch(endedLoading());
         navigate("/*");
       });
-  }, []);
+  }, [dispatch, navigate, showTimeId]);
   useEffect(() => {
     setTotal(selectedSeat.reduce((sum, seat) => sum + (seat.giaVe || 0), 0));
   }, [selectedSeat]);

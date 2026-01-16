@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import loginAnimation from "./../../assets/animation/loginAnimation.json";
 // import Lottie from "react-lottie";
 import Lottie from "lottie-react";
 import { useFormik } from "formik";
 import { userValidation } from "../../utils/validation";
-import { userServ } from "../../services/userServ";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, message, notification, Space } from "antd";
+import { notification } from "antd";
 import { getLocalStorage, saveLocalStore } from "../../utils/local";
 import { useDispatch } from "react-redux";
-import { loginUser, saveInfoUser } from "../../redux/Slice/userSlice";
+import { loginUser } from "../../redux/Slice/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();

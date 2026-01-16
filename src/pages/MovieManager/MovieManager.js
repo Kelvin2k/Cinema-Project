@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { filmServManagement } from "../../services/filmServManagement";
 import {
-  Flex,
   message,
   notification,
   Popconfirm,
-  Space,
   Table,
-  Tag,
 } from "antd";
 import { getLocalStorage } from "../../utils/local";
-import useMessage from "antd/es/message/useMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllMovieThunk } from "../../redux/Slice/movieSlice";
 import { useNavigate } from "react-router-dom";
@@ -77,7 +73,7 @@ const MovieManager = () => {
         gioiTinh: "nam",
       })
     );
-  }, []);
+  }, [dispatch]);
 
   const columns = [
     {

@@ -1,7 +1,6 @@
 import {
   createAsyncThunk,
   createSlice,
-  isRejectedWithValue,
 } from "@reduxjs/toolkit";
 import { userServ } from "../../services/userServ";
 import { getLocalStorage } from "../../utils/local";

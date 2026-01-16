@@ -1,12 +1,10 @@
 import { Tabs } from "antd";
 import React, { useEffect, useState } from "react";
 import { cinemaSchedule } from "../../services/cinemaSchedule";
-import { filmServManagement } from "../../services/filmServManagement";
 import CinemaShowTime from "./CinemaShowTime";
 
 const CinemaSchedule = () => {
   const [cinema, setCinema] = useState([]);
-  const [cinemaCode, setcinemaCode] = useState("");
   useEffect(() => {
     cinemaSchedule
       .getAllCinema()

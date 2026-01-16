@@ -1,22 +1,13 @@
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
-  addUserValidation,
-  signUpValidation,
   updateUserValidation_Admin,
 } from "../../utils/validation";
 import { userServ } from "../../services/userServ";
-import { saveLocalStore } from "../../utils/local";
-import { useDispatch } from "react-redux";
-import { loginUser, saveInfoUser } from "../../redux/Slice/userSlice";
-import { message, notification } from "antd";
+import { notification } from "antd";
 
 const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordAgain, setShowPasswordAgain] = useState(false);
-  const dispatch = useDispatch();
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, title = "", description = "") => {
     api[type]({
@@ -71,7 +62,6 @@ const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
     handleBlur,
     handleChange,
     handleSubmit,
-    resetForm,
     values,
     errors,
     setValues,
@@ -81,7 +71,7 @@ const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
 
   useEffect(() => {
     setValues(userDataUpdate);
-  }, [userDataUpdate]);
+  }, [userDataUpdate, setValues]);
 
   return (
     <div className="min-h-200 container mx-auto flex justify-center items-center">

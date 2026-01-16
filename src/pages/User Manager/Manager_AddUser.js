@@ -1,18 +1,11 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { addUserValidation, signUpValidation } from "../../utils/validation";
+import { addUserValidation } from "../../utils/validation";
 import { userServ } from "../../services/userServ";
-import { saveLocalStore } from "../../utils/local";
-import { useDispatch } from "react-redux";
-import { loginUser, saveInfoUser } from "../../redux/Slice/userSlice";
-import { message, notification } from "antd";
+import { notification } from "antd";
 
 const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordAgain, setShowPasswordAgain] = useState(false);
-  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       taiKhoan: "",
@@ -61,7 +54,6 @@ const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
     handleBlur,
     handleChange,
     handleSubmit,
-    resetForm,
     values,
     errors,
   } = formik;

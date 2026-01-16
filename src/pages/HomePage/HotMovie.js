@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Carousel, Modal } from "antd";
+import { Modal } from "antd";
 import { filmServManagement } from "../../services/filmServManagement";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import styles from "./hotMovie.css";
+import "./hotMovie.css";
 import { Link, useLocation } from "react-router-dom";
 
 const HotMovie = () => {
@@ -19,7 +19,7 @@ const HotMovie = () => {
     setSelectedMovie(movie);
     setIsModalOpen(true);
   };
-  const contentStyle = {
+  const contentStyle_unused = {
     margin: 0,
     minHeight: "300px",
     color: "#fff",

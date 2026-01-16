@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { filmServManagement } from "../../services/filmServManagement";
-import { Rate, Tabs } from "antd";
+import { Tabs } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,6 @@ import { endedLoading, startedLoading } from "../../redux/Slice/loadingSlice";
 
 const CinemaShowTime = ({ cinemaCode }) => {
   const [cinemaDetail, setCinemaDetail] = useState([]);
-  const [filmDetail, setFilmDetail] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,7 +22,7 @@ const CinemaShowTime = ({ cinemaCode }) => {
         console.log("err", err);
         dispatch(endedLoading());
       });
-  }, []);
+  }, [cinemaCode, dispatch]);
   const renderFilmShowTime = () => {
     console.log("hello");
   };

@@ -1,11 +1,8 @@
 import {
-  Button,
   DatePicker,
-  Flex,
   message,
   notification,
   Rate,
-  Space,
   Switch,
 } from "antd";
 import dayjs from "dayjs";
@@ -18,15 +15,6 @@ const EditMovie = () => {
   const navigate = useNavigate();
   const params = useParams();
   const { movieId } = params;
-  const [messageApi, holder] = message.useMessage();
-  const confirm = (e) => {
-    console.log(e);
-    messageApi.success("Click on Yes");
-  };
-  const cancel = (e) => {
-    console.log(e);
-    messageApi.error("Click on No");
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -87,10 +75,8 @@ const EditMovie = () => {
     handleBlur,
     handleChange,
     handleSubmit,
-    resetForm,
     setFieldValue,
     setFieldTouched,
-    setValues,
   } = formik;
 
   const [image, setImage] = useState("");
@@ -130,7 +116,7 @@ const EditMovie = () => {
         console.log("err", err);
         navigate("/*");
       });
-  }, []);
+  }, [movieId, navigate]);
 
   console.log("values", values);
 

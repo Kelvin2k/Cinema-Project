@@ -70,7 +70,7 @@ const Banner = () => {
       }
     };
     fetchBanners();
-  }, []);
+  }, [dispatch]);
   console.log("listBanner", listBanner);
 
   return (

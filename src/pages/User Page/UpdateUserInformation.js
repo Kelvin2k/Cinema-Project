@@ -48,14 +48,13 @@ const UpdateUserInformation = ({ userData }) => {
     handleChange,
     errors,
     handleSubmit,
-    handleReset,
   } = formik;
 
   useEffect(() => {
     if (userData) {
       setValues(userData);
     }
-  }, [userData]);
+  }, [userData, setValues]);
 
   return (
     <div className="bg-neutral-primary-soft shadow-xs rounded-base border border-default p-6 grid grid-cols-2 ">

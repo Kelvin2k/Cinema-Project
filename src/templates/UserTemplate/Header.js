@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { removeKeyLocalStorage } from "../../utils/local";
 import { updateUserName } from "../../redux/Slice/userSlice";
 import { notification } from "antd";

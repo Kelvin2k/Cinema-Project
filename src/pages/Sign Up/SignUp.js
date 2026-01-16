@@ -51,7 +51,6 @@ const SignUp = () => {
     handleBlur,
     handleChange,
     handleSubmit,
-    resetForm,
     values,
     errors,
   } = formik;
