@@ -79,13 +79,13 @@ const Header = () => {
           </NavLink>
           <button
             className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
-            onClick={(e) => goToSection("now_showing", e)}
+            onClick={(e) => goToSection("hot_movie", e)}
           >
             Hot Movie
           </button>
           <button
             className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
-            onClick={(e) => goToSection("hot_movie", e)}
+            onClick={(e) => goToSection("now_showing", e)}
           >
             Now Showing
           </button>
