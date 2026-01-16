@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { removeKeyLocalStorage } from "../../utils/local";
 import { updateUserName } from "../../redux/Slice/userSlice";
 import { notification } from "antd";
@@ -9,7 +9,6 @@ const Header = () => {
   const { userName } = useSelector((state) => state.userSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, title = "", description = "") => {
     api[type]({
