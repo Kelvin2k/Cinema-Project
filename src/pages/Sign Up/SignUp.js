@@ -49,13 +49,13 @@ const SignUp = () => {
   const { touched, handleBlur, handleChange, handleSubmit, values, errors } =
     formik;
   return (
-    <div className="min-h-200 container mx-auto flex justify-center items-center">
-      <div className="w-full">
-        <h1 className="text-center font-bold uppercase text-3xl mb-10 text-white">
+    <div className="min-h-screen container mx-auto flex justify-center items-center px-4 py-8">
+      <div className="w-full max-w-2xl">
+        <h1 className="text-center font-bold uppercase text-2xl sm:text-3xl mb-6 sm:mb-10 text-white">
           User Sign Up Form
         </h1>
 
-        <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
+        <form className="w-full px-4 sm:px-6" onSubmit={handleSubmit}>
           <div className="mb-5">
             <label
               htmlFor="taiKhoan"

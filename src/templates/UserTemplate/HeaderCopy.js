@@ -141,7 +141,6 @@ const Header = () => {
         </div>
       </nav>
 
-      {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-200">
           <div className="space-y-1 px-6 pb-6 pt-4">

@@ -86,7 +86,7 @@ const Banner = () => {
             <img
               src={item.hinhAnh}
               alt=""
-              className="w-full h-175 object-cover"
+              className="w-full h-48 sm:h-64 md:h-96 lg:h-120 xl:h-175 object-cover"
             />
           </div>
         );

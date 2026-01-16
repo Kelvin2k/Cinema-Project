@@ -31,9 +31,9 @@ const MovieDetail = () => {
   }, [dispatch, navigate, params.movieId]);
 
   return (
-    <div className=" mx-auto pb-10" style={{ backgroundColor: "#0B2029" }}>
+    <div className="mx-auto pb-10 px-2 sm:px-4" style={{ backgroundColor: "#0B2029" }}>
       <div className="text-center py-5">
-        <div className="h-30 w-30 rounded-full border border-[15px] border-lime-500 flex items-center justify-center text-yellow-500 text-5xl font-bold mx-auto">
+        <div className="h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-30 lg:w-30 rounded-full border-4 sm:border-8 md:border-[12px] lg:border-[15px] border-lime-500 flex items-center justify-center text-yellow-500 text-3xl sm:text-4xl md:text-5xl font-bold mx-auto">
           {movieInfo.danhGia}
         </div>
         <div className="flex items-center space-x-1 justify-center mt-3">
@@ -54,11 +54,11 @@ const MovieDetail = () => {
         </div>
       </div>
 
-      <div className="content_up grid grid-cols-2 text-white my-5 gap-x-10 container mx-auto">
+      <div className="content_up grid grid-cols-1 lg:grid-cols-2 text-white my-5 gap-4 sm:gap-6 lg:gap-10 container mx-auto px-2 sm:px-4">
         <img
           src={movieInfo.hinhAnh}
           alt=""
-          className="w-full min-h-[600px] object-cover rounded-xl"
+          className="w-full h-64 sm:h-96 md:h-120 lg:min-h-[600px] object-cover rounded-xl"
         />
         <div className="content_left space-y-3 h-full flex flex-col">
           <p className="">
@@ -68,7 +68,7 @@ const MovieDetail = () => {
             </span>
           </p>
 
-          <h2 className="font-bold text-3xl text-green-500">
+          <h2 className="font-bold text-xl sm:text-2xl md:text-3xl text-green-500">
             {movieInfo.tenPhim}
           </h2>
           <p className="description">{movieInfo.moTa}</p>

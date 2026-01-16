@@ -20,11 +20,11 @@ const CinemaSchedule = () => {
     console.log("key", key);
   };
   return (
-    <div className="py-20" id="now_showing">
-      <div className="lg:container lg:mx-auto">
+    <div className="py-10 sm:py-12 md:py-16 lg:py-20 px-2 sm:px-4" id="now_showing">
+      <div className="max-w-7xl mx-auto">
         <Tabs
           defaultActiveKey="1"
-          tabPlacement={"start"}
+          tabPlacement={window.innerWidth < 768 ? "top" : "left"}
           onChange={(key) => {
             renderFilmShowTime();
           }}
@@ -34,7 +34,7 @@ const CinemaSchedule = () => {
               label: (
                 <img
                   src={item.logo}
-                  className="w-20"
+                  className="w-12 sm:w-16 md:w-20"
                   alt={item.tenHeThongRap || "Cinema logo"}
                 />
               ),

@@ -37,6 +37,29 @@ const HotMovie = () => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        }
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        }
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      }
+    ]
   };
 
   const handleCancel = () => {
@@ -44,8 +67,8 @@ const HotMovie = () => {
   };
 
   return (
-    <div className="" id="hot_movie">
-      <h2 className="font-bold text-5xl text-center my-5 text-red-500">
+    <div className="px-2 sm:px-4 md:px-6 lg:px-8" id="hot_movie">
+      <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center my-3 sm:my-4 md:my-5 text-red-500">
         Hot Movie
       </h2>
       <Slider {...settings}>
