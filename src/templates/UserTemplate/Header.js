@@ -46,7 +46,7 @@ const Header = () => {
             />
           </a>
         </div>
-        <div className="flex lg:hidden">
+        {/* <div className="flex lg:hidden">
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -69,8 +69,8 @@ const Header = () => {
               />
             </svg>
           </button>
-        </div>
-        <div className="hidden lg:flex lg:gap-x-12">
+        </div> */}
+        <div className="flex gap-x-5 lg:flex lg:gap-x-12">
           <NavLink
             className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
             to={"/"}
@@ -141,7 +141,7 @@ const Header = () => {
         </div>
       </nav>
 
-      <div>
+      {/* <div>
         {mobileMenuOpen && (
           <div className="lg:hidden bg-white border-t border-gray-200">
             <div className="space-y-1 px-6 pb-6 pt-4">
@@ -227,7 +227,7 @@ const Header = () => {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
     </header>
   );
 };
