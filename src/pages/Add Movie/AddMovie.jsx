@@ -1,10 +1,7 @@
 import {
-  Button,
   DatePicker,
-  Flex,
   notification,
   Rate,
-  Space,
   Switch,
 } from "antd";
 import dayjs from "dayjs";
@@ -74,7 +71,6 @@ const AddMovie = () => {
     handleBlur,
     handleChange,
     handleSubmit,
-    resetForm,
     setFieldValue,
     setFieldTouched,
   } = formik;

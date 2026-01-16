@@ -1,4 +1,3 @@
-import { DatePicker } from "antd";
 import { Route, Routes } from "react-router-dom";
 import UserTemplate from "./templates/UserTemplate/UserTemplate";
 import HomePage from "./pages/HomePage/HomePage";
