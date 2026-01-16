@@ -1,8 +1,6 @@
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import {
-  updateUserValidation_Admin,
-} from "../../utils/validation";
+import { updateUserValidation_Admin } from "../../utils/validation";
 import { userServ } from "../../services/userServ";
 import { notification } from "antd";
 

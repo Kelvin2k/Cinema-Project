@@ -49,14 +49,8 @@ const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
     },
   });
 
-  const {
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    values,
-    errors,
-  } = formik;
+  const { touched, handleBlur, handleChange, handleSubmit, values, errors } =
+    formik;
   console.log("values", values);
   console.log("errors", errors);
 

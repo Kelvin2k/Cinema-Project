@@ -46,14 +46,8 @@ const SignUp = () => {
     },
   });
 
-  const {
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    values,
-    errors,
-  } = formik;
+  const { touched, handleBlur, handleChange, handleSubmit, values, errors } =
+    formik;
   return (
     <div className="min-h-200 container mx-auto flex justify-center items-center">
       <div className="w-full">

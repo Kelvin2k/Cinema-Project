@@ -1,0 +1,39 @@
+
+> my-app@0.1.0 build
+> GENERATE_SOURCEMAP=false react-scripts build
+
+Creating an optimized production build...
+Compiled with warnings.
+
+static/css/main.0ca9f38d.css from Css Minimizer plugin
+postcss-calc: /Users/quangle343/Desktop/IT-web/ReactJS/CapStoneDoAgain/my-app/static/css/main.0ca9f38d.css:1972:5: Lexical error on line 1: Unrecognized text.
+
+  Erroneous area:
+1: infinity * 1px
+^..^
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+File sizes after gzip:
+
+  560.05 kB  build/static/js/main.d5adba55.js
+  20.44 kB   build/static/css/main.1799e477.css
+
+The bundle size is significantly larger than recommended.
+Consider reducing it with code splitting: https://goo.gl/9VhYWB
+You can also analyze the project dependencies: https://goo.gl/LeUzfb
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+

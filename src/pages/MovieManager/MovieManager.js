@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
 import { filmServManagement } from "../../services/filmServManagement";
-import {
-  message,
-  notification,
-  Popconfirm,
-  Table,
-} from "antd";
+import { message, notification, Popconfirm, Table } from "antd";
 import { getLocalStorage } from "../../utils/local";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllMovieThunk } from "../../redux/Slice/movieSlice";
@@ -32,7 +27,7 @@ const MovieManager = () => {
         openNotificationWithIcon(
           "error",
           "Unauthorized",
-          "Bạn cần đăng nhập để thực hiện thao tác này."
+          "You need to log in to perform this action"
         );
         return;
       }

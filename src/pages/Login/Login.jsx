@@ -63,11 +63,7 @@ const Login = () => {
         .unwrap()
         .then((result) => {
           console.log("result", result);
-          openNotificationWithIcon(
-            "success",
-            "Login Successful!",
-            ""
-          );
+          openNotificationWithIcon("success", "Login Successful!", "");
           saveLocalStore(result, "userInfo");
           const userInformation = getLocalStorage("userInfo");
           setTimeout(() => {
