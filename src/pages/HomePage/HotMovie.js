@@ -11,8 +11,6 @@ const HotMovie = () => {
   const [hotMovie, setHotMovie] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const location = useLocation();
-
   const handlePlayClick = (movie) => {
     // Thêm function này
     setSelectedMovie(movie);
@@ -24,8 +22,7 @@ const HotMovie = () => {
       .then((result) => {
         setHotMovie(result.data.content);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }, []);
 
   const settings = {
