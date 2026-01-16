@@ -86,10 +86,10 @@ const MovieDetail = () => {
           <button
             className="bg-red-500 w-fit text-white text-2xl px-6 py-4 rounded mt-5 cursor-pointer hover:bg-red-700 duration-300"
             onClick={() => {
-              console.log(document.querySelector(".content_down"));
+              console.log(document.getElementById("movieScheduleContentDown"));
 
               document
-                .querySelector(".content_down")
+                .getElementById("movieScheduleContentDown")
                 .scrollIntoView({ behavior: "smooth" });
             }}
           >
@@ -98,7 +98,10 @@ const MovieDetail = () => {
         </div>
       </div>
 
-      <div className="content_down bg-white container mx-auto rounded-xl">
+      <div
+        className="content_down bg-white container mx-auto rounded-xl"
+        id="movieScheduleContentDown"
+      >
         <Tabs
           defaultActiveKey="1"
           tabPlacement={"start"}

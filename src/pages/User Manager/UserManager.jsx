@@ -1,4 +1,4 @@
-import { Tabs } from "antd";
+import { notification, Tabs } from "antd";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Flex, Space, Table, Tag } from "antd";
@@ -11,7 +11,13 @@ import { Button, message, Popconfirm } from "antd";
 
 const UserManager = () => {
   const [messageApi, holder] = message.useMessage();
-  const [messageApiPopConfirm, contextHolder] = message.useMessage();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
 
   const confirm = (e, taiKhoan) => {
     console.log(e);
@@ -19,9 +25,11 @@ const UserManager = () => {
       .removeUser(taiKhoan)
       .then((result) => {
         console.log("result", result);
-        messageApiPopConfirm.success({
-          content: "Delete User Successfully",
-        });
+        openNotificationWithIcon(
+          "success",
+          "Delete User Successful",
+          "User has been deleted successfully."
+        );
         userServ
           .fetchUserDataList()
           .then((result) => {
@@ -34,10 +42,10 @@ const UserManager = () => {
           });
       })
       .catch((err) => {
-        console.log("err", err);
-        messageApiPopConfirm.error({
-          content: err.response.data.message,
-        });
+        const errMsg =
+          err?.response?.data?.message ||
+          "Failed to add user. Please try again.";
+        openNotificationWithIcon("error", "Delete User Failed", errMsg);
       });
   };
   const cancel = (e) => {

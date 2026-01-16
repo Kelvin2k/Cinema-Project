@@ -6,14 +6,13 @@ import { userServ } from "../../services/userServ";
 import { saveLocalStore } from "../../utils/local";
 import { useDispatch } from "react-redux";
 import { loginUser, saveInfoUser } from "../../redux/Slice/userSlice";
-import { message } from "antd";
+import { message, notification } from "antd";
 
 const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordAgain, setShowPasswordAgain] = useState(false);
   const dispatch = useDispatch();
-  const [messageApi, contextHolder] = message.useMessage();
   const formik = useFormik({
     initialValues: {
       taiKhoan: "",
@@ -32,7 +31,11 @@ const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
         .then((result) => {
           console.log("result", result.data.messsage);
           setOpenAdd(false);
-          messageApi.success({ content: "Create User Successfully" });
+          openNotificationWithIcon(
+            "success",
+            "Add User Successful",
+            "User has been added successfully."
+          );
           userServ
             .fetchUserDataList()
             .then((result) => {
@@ -44,8 +47,11 @@ const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
             });
         })
         .catch((err) => {
-          console.log("err", err.response.data.message);
-          messageApi.error({ content: err.response.data.message });
+          // console.log("err", err.response.data.message);
+          const errMsg =
+            err?.response?.data?.message ||
+            "Failed to add user. Please try again.";
+          openNotificationWithIcon("error", "Add User Failed", errMsg);
         });
     },
   });
@@ -62,6 +68,13 @@ const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
   console.log("values", values);
   console.log("errors", errors);
 
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
   return (
     <div className="min-h-200 container mx-auto flex justify-center items-center">
       {contextHolder}

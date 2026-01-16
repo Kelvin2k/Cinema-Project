@@ -22,7 +22,7 @@ const CinemaSchedule = () => {
     console.log("key", key);
   };
   return (
-    <div className="py-20">
+    <div className="py-20" id="now_showing">
       <div className="lg:container lg:mx-auto">
         <Tabs
           defaultActiveKey="1"

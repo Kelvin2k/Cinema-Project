@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { cinemaSchedule } from "../../services/cinemaSchedule";
-import { Button, message } from "antd";
+import { Button, message, Modal, notification } from "antd";
 import { useDispatch } from "react-redux";
 import { endedLoading, startedLoading } from "../../redux/Slice/loadingSlice";
 
@@ -15,15 +15,61 @@ const BookingTicket = () => {
   const [movieInfo, setmovieInfo] = useState({});
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [total, setTotal] = useState(0);
-  const [messageApi, contextHolder] = message.useMessage();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const success = () => {
-    messageApi.open({
-      type: "success",
-      content: "Congratulations! You booking has been confirmed!",
-      duration: 5,
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+    const payload = {
+      maLichChieu: Number(showTimeId),
+      danhSachVe: selectedSeat.map(({ maGhe, giaVe }) => ({
+        maGhe,
+        giaVe,
+      })),
+    };
+
+    cinemaSchedule
+      .bookTicket(payload)
+      .then((result) => {
+        openNotificationWithIcon(
+          "success",
+          "Booking Successful!",
+          "Your Booking has been confirmed! Thank you!"
+        );
+      })
+      .catch((err) => {
+        const errMsg =
+          err?.response?.data?.message ||
+          "Failed to add user. Please try again.";
+        openNotificationWithIcon("error", "Update User Failed", errMsg);
+      });
+
+    cinemaSchedule
+      .getShowTimeSeat(showTimeId)
+      .then((result) => {
+        dispatch(endedLoading());
+        console.log("result", result.data.content);
+        setSeatLayout(result.data.content.danhSachGhe);
+        setmovieInfo(result.data.content.thongTinPhim);
+        setSelectedSeat([]);
+        setTotal(0);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
     });
   };
 
@@ -67,6 +113,7 @@ const BookingTicket = () => {
   return (
     <div>
       {contextHolder}
+
       <div className="content container mx-auto grid grid-cols-5 gap-x-20 my-10">
         <div
           className="seat_booking grid grid-cols-10 col-span-3 gap-2 p-5 rounded-2xl"
@@ -150,19 +197,19 @@ const BookingTicket = () => {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 whitespace-nowrap">
               <div className="h-8 w-8 rounded bg-gray-400 "></div>
-              <span className="font-medium">Sold Out</span>
+              <span className="font-medium text-white">Sold Out</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded bg-gray-200"></div>
-              <span className="font-medium">Normal</span>
+              <span className="font-medium text-white">Normal</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded bg-orange-400"></div>
-              <span className="font-medium">VIP</span>
+              <span className="font-medium text-white">VIP</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded bg-green-500"></div>
-              <span className="font-medium">Selecting</span>
+              <span className="font-medium text-white">Selecting</span>
             </div>
           </div>
         </div>
@@ -173,46 +220,63 @@ const BookingTicket = () => {
           }}
         >
           <div>
-            <section className="bg-white antialiased dark:bg-gray-900">
+            <section className="bg-white antialiased dark:bg-gray-900 rounded-lg">
+              <Modal
+                title="Check Out Confirmation"
+                closable={{ "aria-label": "Custom Close Button" }}
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                centered={true}
+              >
+                <p>Are you sure you want to complete your order?</p>
+              </Modal>
               <form
                 action=""
                 className="mx-auto"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  console.log("hellO");
-                  const payload = {
-                    maLichChieu: Number(showTimeId),
-                    danhSachVe: selectedSeat.map(({ maGhe, giaVe }) => ({
-                      maGhe,
-                      giaVe,
-                    })),
-                  };
-
-                  cinemaSchedule
-                    .bookTicket(payload)
-                    .then((result) => {
-                      success();
-                    })
-                    .catch((err) => {
-                      console.log("err", err);
-                    });
-
-                  cinemaSchedule
-                    .getShowTimeSeat(showTimeId)
-                    .then((result) => {
-                      dispatch(endedLoading());
-                      console.log("result", result.data.content);
-                      setSeatLayout(result.data.content.danhSachGhe);
-                      setmovieInfo(result.data.content.thongTinPhim);
-                      setSelectedSeat([]);
-                      setTotal(0);
-                    })
-                    .catch((err) => {
-                      console.log("err", err);
-                    });
+                onClick={() => {
+                  // const payload = {
+                  //   maLichChieu: Number(showTimeId),
+                  //   danhSachVe: selectedSeat.map(({ maGhe, giaVe }) => ({
+                  //     maGhe,
+                  //     giaVe,
+                  //   })),
+                  // };
+                  // cinemaSchedule
+                  //   .bookTicket(payload)
+                  //   .then((result) => {
+                  //     openNotificationWithIcon(
+                  //       "success",
+                  //       "Booking Successful!",
+                  //       "Your Booking has been confirmed! Thank you!"
+                  //     );
+                  //   })
+                  //   .catch((err) => {
+                  //     const errMsg =
+                  //       err?.response?.data?.message ||
+                  //       "Failed to add user. Please try again.";
+                  //     openNotificationWithIcon(
+                  //       "error",
+                  //       "Update User Failed",
+                  //       errMsg
+                  //     );
+                  //   });
+                  // cinemaSchedule
+                  //   .getShowTimeSeat(showTimeId)
+                  //   .then((result) => {
+                  //     dispatch(endedLoading());
+                  //     console.log("result", result.data.content);
+                  //     setSeatLayout(result.data.content.danhSachGhe);
+                  //     setmovieInfo(result.data.content.thongTinPhim);
+                  //     setSelectedSeat([]);
+                  //     setTotal(0);
+                  //   })
+                  //   .catch((err) => {
+                  //     console.log("err", err);
+                  //   });
                 }}
               >
-                <div className="mx-auto max-w-3xl">
+                <div className="mx-auto max-w-3xl p-5 ">
                   <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-5 text-center uppercase">
                     Provisional Invoice
                   </h2>
@@ -355,12 +419,18 @@ const BookingTicket = () => {
                         <button
                           type="button"
                           className="w-full rounded-lg  border border-gray-200 px-5  py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 cursor-pointer duration-300 bg-gray-200"
+                          onClick={() => {
+                            navigate(-1);
+                          }}
                         >
                           Return
                         </button>
                         <button
-                          type="submit"
+                          type="button"
                           className="mt-4 flex w-full items-center justify-center rounded-lg bg-primary-700  px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300  dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:mt-0 bg-red-500 hover:bg-red-700 cursor-pointer duration-300"
+                          onClick={() => {
+                            showModal(true);
+                          }}
                         >
                           Click to buy!
                         </button>

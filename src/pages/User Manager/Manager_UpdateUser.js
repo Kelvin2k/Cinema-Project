@@ -10,14 +10,20 @@ import { userServ } from "../../services/userServ";
 import { saveLocalStore } from "../../utils/local";
 import { useDispatch } from "react-redux";
 import { loginUser, saveInfoUser } from "../../redux/Slice/userSlice";
-import { message } from "antd";
+import { message, notification } from "antd";
 
 const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordAgain, setShowPasswordAgain] = useState(false);
   const dispatch = useDispatch();
-  const [messageApi, contextHolder] = message.useMessage();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
   const formik = useFormik({
     initialValues: {
       taiKhoan: "",
@@ -36,7 +42,11 @@ const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
         .then((result) => {
           console.log("result", result);
           setOpenUpdate(false);
-          messageApi.success({ content: "Update User Successfully" });
+          openNotificationWithIcon(
+            "success",
+            "Update User Successful",
+            "User has been updated successfully."
+          );
           userServ
             .fetchUserDataList()
             .then((result) => {
@@ -48,8 +58,10 @@ const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
             });
         })
         .catch((err) => {
-          console.log("err", err);
-          messageApi.error({ content: err.response.data.message });
+          const errMsg =
+            err?.response?.data?.message ||
+            "Failed to add user. Please try again.";
+          openNotificationWithIcon("error", "Update User Failed", errMsg);
         });
     },
   });

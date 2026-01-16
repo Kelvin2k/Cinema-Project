@@ -46,7 +46,7 @@ const UserPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen mt-10">
+    <div className="min-h-screen pt-10 bg-white">
       <h1 className="uppercase text-3xl text-center font-bold">{title}</h1>
       <div
         className="container mx-auto p-5 rounded-lg my-5"

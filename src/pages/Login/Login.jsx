@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import { userValidation } from "../../utils/validation";
 import { userServ } from "../../services/userServ";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, message, Space } from "antd";
+import { Button, message, notification, Space } from "antd";
 import { getLocalStorage, saveLocalStore } from "../../utils/local";
 import { useDispatch } from "react-redux";
 import { loginUser, saveInfoUser } from "../../redux/Slice/userSlice";
@@ -14,6 +14,13 @@ import { loginUser, saveInfoUser } from "../../redux/Slice/userSlice";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -57,10 +64,11 @@ const Login = () => {
         .unwrap()
         .then((result) => {
           console.log("result", result);
-          messageApi.open({
-            type: "success",
-            content: "Login success!",
-          });
+          openNotificationWithIcon(
+            "success",
+            "Login Successful!",
+            ""
+          );
           saveLocalStore(result, "userInfo");
           const userInformation = getLocalStorage("userInfo");
           setTimeout(() => {
@@ -69,14 +77,13 @@ const Login = () => {
             } else {
               navigate("/");
             }
-          }, 1000);
+          }, 2000);
         })
         .catch((err) => {
-          console.log("err", err);
-          messageApi.open({
-            type: "error",
-            content: err,
-          });
+          const errMsg =
+            err?.response?.data?.message ||
+            "Failed to add user. Please try again.";
+          openNotificationWithIcon("error", "Log In Failed!", errMsg);
         });
 
       resetForm();
@@ -86,8 +93,6 @@ const Login = () => {
 
   const { values, errors, handleBlur, handleChange, touched, handleSubmit } =
     formik;
-
-  const [messageApi, contextHolder] = message.useMessage();
 
   // useEffect(() => {
   //   setTimeout(() => {

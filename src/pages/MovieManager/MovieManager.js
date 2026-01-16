@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { filmServManagement } from "../../services/filmServManagement";
-import { Flex, message, Popconfirm, Space, Table, Tag } from "antd";
+import {
+  Flex,
+  message,
+  notification,
+  Popconfirm,
+  Space,
+  Table,
+  Tag,
+} from "antd";
 import { render } from "@testing-library/react";
 import { getLocalStorage } from "../../utils/local";
 import useMessage from "antd/es/message/useMessage";
@@ -14,30 +22,44 @@ const MovieManager = () => {
   const navigate = useNavigate();
   // const [listMovie, setListMovie] = useState([]);
 
-  const [messageApi, holder] = message.useMessage();
-  const confirm = (e, record) => {
-    const dataUser = getLocalStorage("userInfo");
-    console.log(`Bearer ${dataUser.accessToken}`);
-    filmServManagement
-      .deleteMovie(record.maPhim)
-      .then((result) => {
-        filmServManagement
-          .getAllMovie()
-          .then((result) => {
-            // setListMovie(result.data.content);
-            dispatch(getAllMovieThunk());
-            messageApi.success("Delete Film successfully");
-          })
-          .catch((err) => {
-            console.log("err", err);
-          });
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
+
+  const confirm = async (e, record) => {
+    try {
+      const dataUser = getLocalStorage("userInfo") || {};
+      if (!dataUser.accessToken) {
+        openNotificationWithIcon(
+          "error",
+          "Unauthorized",
+          "Bạn cần đăng nhập để thực hiện thao tác này."
+        );
+        return;
+      }
+
+      await filmServManagement.deleteMovie(record.maPhim);
+      // refresh list via thunk
+      dispatch(getAllMovieThunk());
+      openNotificationWithIcon(
+        "success",
+        "Delete Movie Successful",
+        "Movie has been deleted successfully."
+      );
+    } catch (err) {
+      console.error("delete error", err);
+      const errMsg =
+        err?.response?.data?.content ||
+        "Failed to delete movie. Please try again.";
+      openNotificationWithIcon("error", "Delete Movie Failed", errMsg);
+    }
   };
   const cancel = (e) => {
-    messageApi.error("Delete command aborted!");
+    message.error("Delete command aborted!");
   };
 
   useEffect(() => {
@@ -96,7 +118,7 @@ const MovieManager = () => {
 
         return (
           <div className="space-x-3 space-y-3">
-            {holder}
+            {contextHolder}
             <Popconfirm
               title="Delete the task"
               description="Are you sure to delete this task?"
@@ -135,6 +157,7 @@ const MovieManager = () => {
 
   return (
     <div>
+      {contextHolder}
       <h2 className="font-bold text-2xl mb-5">Film List</h2>
       <Table
         columns={columns}

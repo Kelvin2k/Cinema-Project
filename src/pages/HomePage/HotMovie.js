@@ -52,8 +52,10 @@ const HotMovie = () => {
   };
 
   return (
-    <div className="container mx-auto">
-      <h2 className="font-bold text-2xl text-center my-5">Hot Movie</h2>
+    <div className="" id="hot_movie">
+      <h2 className="font-bold text-5xl text-center my-5 text-red-500">
+        Hot Movie
+      </h2>
       <Slider {...settings}>
         {hotMovie?.map((movie, index) => {
           return (
@@ -79,11 +81,14 @@ const HotMovie = () => {
                 <span className="text-white bg-red-500 rounded-sm px-2 py-2 mr-3">
                   C18
                 </span>
-                <Link to={`/detail_movie/${movie.maPhim}`}>
+                <Link
+                  to={`/detail_movie/${movie.maPhim}`}
+                  className="text-white"
+                >
                   {movie.tenPhim}
                 </Link>
               </p>
-              <p className="description line-clamp-3 text-gray-500">
+              <p className="description line-clamp-3 text-gray-300">
                 {movie.moTa}
               </p>
               <Link to={`/detail_movie/${movie.maPhim}`}>

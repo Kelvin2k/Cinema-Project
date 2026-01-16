@@ -9,14 +9,19 @@ const UserTemplate = () => {
   const { isActive } = useSelector((state) => state.loadingSlice);
 
   return (
-    <>
+    <div
+      className=""
+      style={{
+        backgroundColor: "#0B2129",
+      }}
+    >
       {isActive ? <Loading /> : null}
       <div>
         <Header />
         <Outlet />
         <Footer />
       </div>
-    </>
+    </div>
   );
 };
 

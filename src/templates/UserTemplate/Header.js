@@ -1,17 +1,37 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { removeKeyLocalStorage } from "../../utils/local";
 import { updateUserName } from "../../redux/Slice/userSlice";
+import { notification } from "antd";
 
 const Header = () => {
   const { userName } = useSelector((state) => state.userSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
+
+  const goToSection = (id, e) => {
+    e?.preventDefault();
+    const elementId = document.getElementById(id);
+    if (location.pathname === "/") {
+      elementId.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+    navigate("/", { state: { scrollTo: id } });
+  };
 
   return (
     <header className="bg-white">
+      {contextHolder}
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
@@ -20,9 +40,9 @@ const Header = () => {
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-              alt=""
-              className="h-8 w-auto"
+              src="https://static.vecteezy.com/system/resources/previews/022/580/623/non_2x/movie-media-letter-logo-design-illustration-free-vector.jpg"
+              className="h-20 w-auto"
+              alt="Flowbite Logo"
             />
           </a>
         </div>
@@ -52,44 +72,28 @@ const Header = () => {
         </div>
         <el-popover-group className="hidden lg:flex lg:gap-x-12">
           <NavLink
-            className={({ isActive, isPending }) => {
-              return isActive
-                ? "text-sm/6 font-semibold text-red-500 cursor-pointer"
-                : "text-sm/6 font-semibold text-gray-900 cursor-pointer";
-            }}
+            className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
             to={"/"}
           >
             Home Page
           </NavLink>
           <NavLink
-            className={({ isActive, isPending }) => {
-              return isActive
-                ? "text-sm/6 font-semibold text-red-500 cursor-pointer "
-                : "text-sm/6 font-semibold text-gray-900 cursor-pointer";
-            }}
-            to={"/cinema"}
+            className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+            onClick={(e) => goToSection("now_showing", e)}
           >
-            Cinema
+            Hot Movie
           </NavLink>
           <NavLink
-            className={({ isActive, isPending }) => {
-              return isActive
-                ? "text-sm/6 font-semibold text-red-500 cursor-pointer"
-                : "text-sm/6 font-semibold text-gray-900 cursor-pointer";
-            }}
-            to={"/news"}
+            className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+            onClick={(e) => goToSection("hot_movie", e)}
           >
-            News
+            Now Showing
           </NavLink>
           <NavLink
-            className={({ isActive, isPending }) => {
-              return isActive
-                ? "text-sm/6 font-semibold text-red-500 cursor-pointer"
-                : "text-sm/6 font-semibold text-gray-900 cursor-pointer";
-            }}
-            to={"/application"}
+            className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+            onClick={(e) => goToSection("new_release", e)}
           >
-            Application
+            New Release
           </NavLink>
         </el-popover-group>
 
@@ -111,7 +115,14 @@ const Header = () => {
                   e.stopPropagation();
                   removeKeyLocalStorage("userInfo");
                   dispatch(updateUserName(""));
-                  navigate("/login");
+                  openNotificationWithIcon(
+                    "success",
+                    "Log Out Successful",
+                    "You have been log out"
+                  );
+                  setTimeout(() => {
+                    navigate("/login");
+                  }, 2000);
                 }}
               >
                 Log out
