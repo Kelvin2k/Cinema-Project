@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import "./hotMovie.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const HotMovie = () => {
   const [hotMovie, setHotMovie] = useState([]);
@@ -23,7 +23,7 @@ const HotMovie = () => {
         setHotMovie(result.data.content);
       })
       .catch((err) => {});
-  }, []);
+  });
 
   const settings = {
     dots: true,
