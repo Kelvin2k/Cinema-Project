@@ -45,7 +45,7 @@ const Header = () => {
             />
           </a>
         </div>
-        <div className="block lg:flex lg:gap-x-12">
+        <div className="flex lg:flex lg:gap-x-12 gap-x-10">
           <NavLink
             className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
             to={"/"}
