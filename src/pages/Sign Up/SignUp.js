@@ -51,7 +51,7 @@ const SignUp = () => {
   return (
     <div className="min-h-200 container mx-auto flex justify-center items-center">
       <div className="w-full">
-        <h1 className="text-center font-bold uppercase text-3xl mb-10">
+        <h1 className="text-center font-bold uppercase text-3xl mb-10 text-white">
           User Sign Up Form
         </h1>
 
@@ -59,14 +59,14 @@ const SignUp = () => {
           <div className="mb-5">
             <label
               htmlFor="taiKhoan"
-              className="block mb-2.5 text-sm font-medium text-heading"
+              className="block mb-2.5 text-sm font-medium text-white"
             >
               Account Name
             </label>
             <input
               type="text"
               id="taiKhoan"
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="bg-neutral-secondary-medium border border-default-medium text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               placeholder="Enter account name"
               name="taiKhoan"
               value={values.taiKhoan}
@@ -80,7 +80,7 @@ const SignUp = () => {
           <div className="mb-5">
             <label
               htmlFor="password"
-              className="block mb-2.5 text-sm font-medium text-heading"
+              className="block mb-2.5 text-sm font-medium text-white"
             >
               Password
             </label>
@@ -88,7 +88,7 @@ const SignUp = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 id="matKhau"
-                className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                className="bg-neutral-secondary-medium border border-default-medium text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 placeholder="••••••••"
                 name="matKhau"
                 value={values.matKhau}
@@ -117,7 +117,7 @@ const SignUp = () => {
           <div className="mb-5">
             <label
               htmlFor="password"
-              className="block mb-2.5 text-sm font-medium text-heading"
+              className="block mb-2.5 text-sm font-medium text-white"
             >
               Input Password Again
             </label>
@@ -125,7 +125,7 @@ const SignUp = () => {
               <input
                 type={showPasswordAgain ? "text" : "password"}
                 id="nhapLaiMatKhau"
-                className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                className="bg-neutral-secondary-medium border border-default-medium text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 placeholder="••••••••"
                 name="nhapLaiMatKhau"
                 value={values.nhapLaiMatKhau}
@@ -156,14 +156,14 @@ const SignUp = () => {
             <div className="mb-5">
               <label
                 htmlFor="hoTen"
-                className="block mb-2.5 text-sm font-medium text-heading"
+                className="block mb-2.5 text-sm font-medium text-white"
               >
                 User Name
               </label>
               <input
                 type="text"
                 id="hoTen"
-                className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                className="bg-neutral-secondary-medium border border-default-medium text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 placeholder="Full name"
                 name="hoTen"
                 value={values.hoTen}
@@ -177,14 +177,14 @@ const SignUp = () => {
             <div className="mb-5">
               <label
                 htmlFor="email"
-                className="block mb-2.5 text-sm font-medium text-heading"
+                className="block mb-2.5 text-sm font-medium text-white"
               >
                 User Email
               </label>
               <input
                 type="email"
                 id="email"
-                className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                className="bg-neutral-secondary-medium border border-default-medium text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 placeholder="email@example.com"
                 name="email"
                 value={values.email}
@@ -198,14 +198,14 @@ const SignUp = () => {
             <div className="mb-5">
               <label
                 htmlFor="soDt"
-                className="block mb-2.5 text-sm font-medium text-heading"
+                className="block mb-2.5 text-sm font-medium text-white"
               >
                 Phone Number
               </label>
               <input
                 type="text"
                 id="soDt"
-                className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                className="bg-neutral-secondary-medium border border-default-medium text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 placeholder="0977123456"
                 name="soDt"
                 value={values.soDt}
