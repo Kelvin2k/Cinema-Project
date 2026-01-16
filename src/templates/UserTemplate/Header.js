@@ -141,7 +141,7 @@ const Header = () => {
         </div>
       </nav>
 
-      {mobileMenuOpen && (
+      {mobileMenuOpen ? (
         <div className="lg:hidden bg-white border-t border-gray-200">
           <div className="space-y-1 px-6 pb-6 pt-4">
             <button className="block hover:bg-gray-100 rounded-md px-2 py-1 w-full text-left duration-200">
@@ -208,7 +208,7 @@ const Header = () => {
             </div>
           </div>
         </div>
-      )}
+      ) : null}
     </header>
   );
 };
