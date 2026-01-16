@@ -70,7 +70,7 @@ const Header = () => {
             </svg>
           </button>
         </div>
-        <el-popover-group className="hidden lg:flex lg:gap-x-12">
+        <div className="hidden lg:flex lg:gap-x-12">
           <NavLink
             className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
             to={"/"}
@@ -95,10 +95,9 @@ const Header = () => {
           >
             New Release
           </NavLink>
-        </el-popover-group>
+        </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {userName ? (
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">{userName ? (
             <p
               className="text-emerald-600 cursor-pointer hover:text-lg hover:text-emerald-800 uppercase duration-200"
               onClick={() => {
