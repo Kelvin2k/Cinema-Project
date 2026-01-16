@@ -72,7 +72,7 @@ const UserManager = () => {
       dataIndex: "taiKhoan",
 
       key: "taiKhoan",
-      render: (text) => <a>{text}</a>,
+      render: (text) => <span>{text}</span>,
     },
     {
       title: "User Name",
@@ -209,6 +209,7 @@ const UserManager = () => {
                 </>
               )}
             >
+              {/* eslint-disable-next-line react/jsx-pascal-case */}
               <Manager_AddUser
                 setOpenAdd={setOpenAdd}
                 setUserList={setUserList}
@@ -225,6 +226,7 @@ const UserManager = () => {
                 </>
               )}
             >
+              {/* eslint-disable-next-line react/jsx-pascal-case */}
               <Manager_UpdateUser
                 userDataUpdate={userDataUpdate}
                 setOpenUpdate={setOpenUpdate}
