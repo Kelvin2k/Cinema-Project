@@ -9,7 +9,6 @@ import {
   Table,
   Tag,
 } from "antd";
-import { render } from "@testing-library/react";
 import { getLocalStorage } from "../../utils/local";
 import useMessage from "antd/es/message/useMessage";
 import { useDispatch, useSelector } from "react-redux";
