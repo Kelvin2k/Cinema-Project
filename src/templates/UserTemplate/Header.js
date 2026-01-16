@@ -51,7 +51,7 @@ const Header = () => {
             type="button"
             onClick={() => {
               console.log("test");
-              setMobileMenuOpen(!mobileMenuOpen);
+              setMobileMenuOpen((prev) => !prev);
             }}
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
           >
