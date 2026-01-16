@@ -22,16 +22,11 @@ const MovieReviews = () => {
     (async () => {
       try {
         const popularMovie = await reviewServ.fetchPopularData();
-        console.log("popularMovie", popularMovie);
-        // const id = popularMovie.results[2].id;
-        // console.log("id", id);
         const listHotMovie = popularMovie.results.slice(4, 6);
-        console.log("listHotMovie", listHotMovie);
         setListHotMovie(listHotMovie);
 
         const listFilmReview = [];
         for (const movie of listHotMovie) {
-          console.log("movie.id", movie.id);
           const reviews = await reviewServ.fetchUserReviewBasedOnFilmId(
             movie.id
           );
@@ -41,16 +36,13 @@ const MovieReviews = () => {
             title: movie.title,
           });
         }
-        console.log("listFilmReview", listFilmReview);
 
         setListReviews(listFilmReview);
       } catch (error) {
-        console.log("error", error);
       }
     })();
   }, []);
 
-  console.log("listReviews", listReviews);
 
   return (
     <div className="my-10 space-y-8" id="new_release">
@@ -58,12 +50,10 @@ const MovieReviews = () => {
         New Release
       </h2>
       {listReviews?.map((item, index) => {
-        console.log("item", item);
         const newListHotMovie = listHotMovie.filter(
           (movie) => movie.id === item.id
         );
-        console.log("newListHotMovie", newListHotMovie);
-        console.log(newListHotMovie[0].backdrop_path);
+
 
         return (
           <div key={index} className="mb-10 ">

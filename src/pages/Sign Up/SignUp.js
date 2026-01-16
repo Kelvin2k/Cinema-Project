@@ -25,23 +25,19 @@ const SignUp = () => {
     },
     validationSchema: signUpValidation,
     onSubmit: (values) => {
-      console.log("values", values);
       userServ
         .signUpServ(values)
         .then((result) => {
-          console.log("result");
           saveLocalStore(values, "userInfo");
           dispatch(saveInfoUser(values));
           dispatch(loginUser(values))
             .unwrap()
             .then((result) => {
-              console.log("result", result);
               navigate("/");
             })
             .catch((err) => {});
         })
         .catch((err) => {
-          console.log(err);
         });
     },
   });

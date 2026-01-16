@@ -48,30 +48,19 @@ const Banner = () => {
   };
 
   useEffect(() => {
-    // filmServManagement
-    //   .getAllBanner()
-    //   .then((result) => {
-    //     console.log("result");
-    //   })
-    //   .catch((err) => {
-    //     console.log("err", err);
-    //   });
     dispatch(startedLoading());
 
     const fetchBanners = async () => {
       try {
         const data = await filmServManagement.getAllBanner();
-        console.log("data", data);
         setListBanner(data.data.content);
         dispatch(endedLoading());
       } catch (error) {
-        console.log("error", error);
         dispatch(startedLoading());
       }
     };
     fetchBanners();
   }, [dispatch]);
-  console.log("listBanner", listBanner);
 
   return (
     <Carousel

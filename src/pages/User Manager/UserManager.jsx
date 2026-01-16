@@ -19,11 +19,9 @@ const UserManager = () => {
   };
 
   const confirm = (e, taiKhoan) => {
-    console.log(e);
     userServ
       .removeUser(taiKhoan)
       .then((result) => {
-        console.log("result", result);
         openNotificationWithIcon(
           "success",
           "Delete User Successful",
@@ -32,12 +30,10 @@ const UserManager = () => {
         userServ
           .fetchUserDataList()
           .then((result) => {
-            console.log("result", result.data.content);
 
             setUserList(result.data.content);
           })
           .catch((err) => {
-            console.log("err", err);
           });
       })
       .catch((err) => {
@@ -48,7 +44,6 @@ const UserManager = () => {
       });
   };
   const cancel = (e) => {
-    console.log(e);
     messageApi.error("Click on No");
   };
 
@@ -58,11 +53,9 @@ const UserManager = () => {
     userServ
       .fetchUserDataList()
       .then((result) => {
-        console.log("result", result.data.content);
         setUserList(result.data.content);
       })
       .catch((err) => {
-        console.log("err", err);
       });
   }, []);
 
@@ -126,11 +119,9 @@ const UserManager = () => {
               userServ
                 .fetchUserData_Admin(record.taiKhoan)
                 .then((result) => {
-                  console.log("result", result);
                   setUserDataUpdate(result.data.content);
                 })
                 .catch((err) => {
-                  console.log("err", err);
                 });
             }}
           ></i>
@@ -149,7 +140,6 @@ const UserManager = () => {
     setOpenAdd(true);
   };
   const showModalUpdate = () => {
-    console.log("test");
 
     setOpenUpdate(true);
   };
@@ -170,15 +160,12 @@ const UserManager = () => {
           className="w-full mt-5 mx-auto"
           onSubmit={(e) => {
             e.preventDefault();
-            console.log("searchInputValue", searchInputValue);
             userServ
               .findUser(searchInputValue)
               .then((result) => {
-                console.log("result", result.data.content);
                 setUserList(result.data.content);
               })
               .catch((err) => {
-                console.log("err", err);
               });
           }}
         >

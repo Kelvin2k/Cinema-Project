@@ -6,8 +6,6 @@ import { useDispatch } from "react-redux";
 import { endedLoading, startedLoading } from "../../redux/Slice/loadingSlice";
 
 const BookingTicket = () => {
-  console.log("rerender");
-
   const params = useParams();
   const { showTimeId } = params;
   const [seatLayout, setSeatLayout] = useState([]);
@@ -51,15 +49,12 @@ const BookingTicket = () => {
       .getShowTimeSeat(showTimeId)
       .then((result) => {
         dispatch(endedLoading());
-        console.log("result", result.data.content);
         setSeatLayout(result.data.content.danhSachGhe);
         setmovieInfo(result.data.content.thongTinPhim);
         setSelectedSeat([]);
         setTotal(0);
       })
-      .catch((err) => {
-        console.log("err", err);
-      });
+      .catch((err) => {});
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -92,13 +87,11 @@ const BookingTicket = () => {
       .getShowTimeSeat(showTimeId)
       .then((result) => {
         dispatch(endedLoading());
-        console.log("result", result.data.content);
         setSeatLayout(result.data.content.danhSachGhe);
         setmovieInfo(result.data.content.thongTinPhim);
         dispatch(endedLoading());
       })
       .catch((err) => {
-        console.log("err", err);
         dispatch(endedLoading());
         navigate("/*");
       });
@@ -106,8 +99,6 @@ const BookingTicket = () => {
   useEffect(() => {
     setTotal(selectedSeat.reduce((sum, seat) => sum + (seat.giaVe || 0), 0));
   }, [selectedSeat]);
-
-  console.log("selectedSeat", selectedSeat);
 
   return (
     <div>
@@ -230,51 +221,7 @@ const BookingTicket = () => {
               >
                 <p>Are you sure you want to complete your order?</p>
               </Modal>
-              <form
-                action=""
-                className="mx-auto"
-                onClick={() => {
-                  // const payload = {
-                  //   maLichChieu: Number(showTimeId),
-                  //   danhSachVe: selectedSeat.map(({ maGhe, giaVe }) => ({
-                  //     maGhe,
-                  //     giaVe,
-                  //   })),
-                  // };
-                  // cinemaSchedule
-                  //   .bookTicket(payload)
-                  //   .then((result) => {
-                  //     openNotificationWithIcon(
-                  //       "success",
-                  //       "Booking Successful!",
-                  //       "Your Booking has been confirmed! Thank you!"
-                  //     );
-                  //   })
-                  //   .catch((err) => {
-                  //     const errMsg =
-                  //       err?.response?.data?.message ||
-                  //       "Failed to add user. Please try again.";
-                  //     openNotificationWithIcon(
-                  //       "error",
-                  //       "Update User Failed",
-                  //       errMsg
-                  //     );
-                  //   });
-                  // cinemaSchedule
-                  //   .getShowTimeSeat(showTimeId)
-                  //   .then((result) => {
-                  //     dispatch(endedLoading());
-                  //     console.log("result", result.data.content);
-                  //     setSeatLayout(result.data.content.danhSachGhe);
-                  //     setmovieInfo(result.data.content.thongTinPhim);
-                  //     setSelectedSeat([]);
-                  //     setTotal(0);
-                  //   })
-                  //   .catch((err) => {
-                  //     console.log("err", err);
-                  //   });
-                }}
-              >
+              <form action="" className="mx-auto">
                 <div className="mx-auto max-w-3xl p-5 ">
                   <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-5 text-center uppercase">
                     Provisional Invoice
@@ -346,7 +293,6 @@ const BookingTicket = () => {
                             <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500 flex justify-end">
                               <div className="flex w-fit gap-x-2">
                                 {selectedSeat?.map((seat, index) => {
-                                  console.log("seat", seat);
                                   return (
                                     <p className="" key={index}>
                                       Seat {seat.tenGhe}

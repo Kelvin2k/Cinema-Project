@@ -37,7 +37,6 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      console.log("hello");
       state.userName = action.payload.hoTen;
     });
   },

@@ -18,13 +18,11 @@ const MovieDetail = () => {
     cinemaSchedule
       .getMovieShowTime(params.movieId)
       .then((result) => {
-        console.log("result", result);
         setListCinema(result.data.content.heThongRapChieu);
         setMovieInfo(result.data.content);
         dispatch(endedLoading());
       })
       .catch((err) => {
-        console.log("err", err);
       });
   }, []);
 
@@ -83,7 +81,6 @@ const MovieDetail = () => {
           <button
             className="bg-red-500 w-fit text-white text-2xl px-6 py-4 rounded mt-5 cursor-pointer hover:bg-red-700 duration-300"
             onClick={() => {
-              console.log(document.querySelector(".content_down"));
 
               document
                 .querySelector(".content_down")

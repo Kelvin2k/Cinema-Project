@@ -25,11 +25,9 @@ const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
     },
     validationSchema: updateUserValidation_Admin,
     onSubmit: (values, { resetForm }) => {
-      console.log("values", values);
       userServ
         .updatUserInfo_Admin(values)
         .then((result) => {
-          console.log("result", result);
           setOpenUpdate(false);
           openNotificationWithIcon(
             "success",
@@ -39,11 +37,9 @@ const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
           userServ
             .fetchUserDataList()
             .then((result) => {
-              console.log("result", result.data.content);
               setUserList(result.data.content);
             })
             .catch((err) => {
-              console.log("err", err);
             });
         })
         .catch((err) => {
@@ -64,8 +60,7 @@ const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
     errors,
     setValues,
   } = formik;
-  console.log("values", values);
-  console.log("errors", errors);
+
 
   useEffect(() => {
     setValues(userDataUpdate);

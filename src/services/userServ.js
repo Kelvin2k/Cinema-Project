@@ -3,7 +3,6 @@ import { https } from "./configServ";
 
 export const userServ = {
   loginServ: (data) => {
-    console.log("data", data);
     return https.post("/api/QuanLyNguoiDung/DangNhap", data);
   },
   signUpServ: (data) => {
@@ -22,11 +21,9 @@ export const userServ = {
           },
         }
       );
-      console.log("result", result.data.content);
 
       return result.data.content;
     } catch (error) {
-      console.log("error", error);
     }
   },
   findUser: (key) => {
@@ -59,7 +56,6 @@ export const userServ = {
       );
       return result.data;
     } catch (error) {
-      console.log("error", error);
     }
   },
   fetchUserData_Admin: (accountId) => {

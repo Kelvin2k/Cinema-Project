@@ -18,11 +18,9 @@ const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
     },
     validationSchema: addUserValidation,
     onSubmit: (values, { resetForm }) => {
-      console.log("values", values);
       userServ
         .addUser(values)
         .then((result) => {
-          console.log("result", result.data.messsage);
           setOpenAdd(false);
           openNotificationWithIcon(
             "success",
@@ -32,15 +30,12 @@ const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
           userServ
             .fetchUserDataList()
             .then((result) => {
-              console.log("result", result.data.content);
               setUserList(result.data.content);
             })
             .catch((err) => {
-              console.log("err", err.response.data.messsage);
             });
         })
         .catch((err) => {
-          // console.log("err", err.response.data.message);
           const errMsg =
             err?.response?.data?.message ||
             "Failed to add user. Please try again.";
@@ -51,8 +46,7 @@ const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
 
   const { touched, handleBlur, handleChange, handleSubmit, values, errors } =
     formik;
-  console.log("values", values);
-  console.log("errors", errors);
+
 
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, title = "", description = "") => {

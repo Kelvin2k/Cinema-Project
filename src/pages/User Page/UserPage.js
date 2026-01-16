@@ -30,17 +30,14 @@ const UserPage = () => {
       return;
     }
     const accountId = getLocalStorage("userInfo").taiKhoan;
-    console.log("accountId", accountId);
 
     userServ
       .fetchUserData_User(accountId)
       .then((result) => {
-        console.log("result", result);
         setUserData(result.content);
         dispatch(endedLoading());
       })
       .catch((err) => {
-        console.log("err", err);
         dispatch(endedLoading());
       });
   }, [dispatch, navigate]);

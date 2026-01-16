@@ -102,7 +102,6 @@ const Header = () => {
             <p
               className="text-emerald-600 cursor-pointer hover:text-lg hover:text-emerald-800 uppercase duration-200"
               onClick={() => {
-                console.log("hello");
                 navigate("/profile");
               }}
             >
@@ -111,7 +110,6 @@ const Header = () => {
                 type="button"
                 className="font-semibold text-red-500 text-base cursor-pointer ml-3  duration-200 hover:text-lg"
                 onClick={(e) => {
-                  console.log("hello");
                   e.stopPropagation();
                   removeKeyLocalStorage("userInfo");
                   dispatch(updateUserName(""));

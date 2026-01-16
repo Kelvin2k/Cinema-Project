@@ -19,12 +19,10 @@ const CinemaShowTime = ({ cinemaCode }) => {
         dispatch(endedLoading());
       })
       .catch((err) => {
-        console.log("err", err);
         dispatch(endedLoading());
       });
   }, [cinemaCode, dispatch]);
   const renderFilmShowTime = () => {
-    console.log("hello");
   };
 
   return (

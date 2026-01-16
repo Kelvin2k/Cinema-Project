@@ -18,7 +18,6 @@ const AdminTemplate = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const location = useLocation();
-  console.log(location.pathname);
 
   useEffect(() => {
     if (userInfo) {

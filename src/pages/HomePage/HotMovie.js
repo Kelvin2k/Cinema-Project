@@ -12,7 +12,6 @@ const HotMovie = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const location = useLocation();
-  console.log("location", location.pathname);
 
   const handlePlayClick = (movie) => {
     // Thêm function này
@@ -23,11 +22,9 @@ const HotMovie = () => {
     filmServManagement
       .getMovieList()
       .then((result) => {
-        console.log("result", result.data.content);
         setHotMovie(result.data.content);
       })
       .catch((err) => {
-        console.log("err", err);
       });
   }, []);
 

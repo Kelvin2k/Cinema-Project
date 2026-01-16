@@ -23,18 +23,15 @@ const UpdateUserInformation = ({ userData }) => {
     },
     validationSchema: updateUserValidation,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
       userServ
         .updateUserInfo_User(values)
         .then((result) => {
-          console.log("result", result);
           saveLocalStore("userInfo", result);
           dispatch(updateUserName(result.hoTen));
           messageApi.success({ content: "Update Successfully" });
           resetForm();
         })
         .catch((err) => {
-          console.log("err", err.message);
           messageApi.error({ content: err.response.data.message });
         });
     },

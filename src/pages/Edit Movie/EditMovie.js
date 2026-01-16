@@ -24,7 +24,6 @@ const EditMovie = () => {
       hinhAnh: "",
     },
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
 
       // values.ngayKhoiChieu = moment(values.ngayKhoiChieu).format("DD-MM-YYYY");
       const formData = new FormData();
@@ -36,12 +35,10 @@ const EditMovie = () => {
         }
       }
       formData.append("maNhom", "GP01");
-      console.log([...formData.entries()]);
 
       filmServManagement
         .updateMovieInfo(formData)
         .then((result) => {
-          console.log("result", result);
           openNotificationWithIcon(
             "success",
             "Update Movie Successful",
@@ -54,7 +51,6 @@ const EditMovie = () => {
           }, 2000);
         })
         .catch((err) => {
-          console.log("err", err);
           const errMsg =
             err.response?.data?.content ||
             "Failed to update movie. Please try again.";
@@ -87,9 +83,7 @@ const EditMovie = () => {
     filmServManagement
       .getMovieInfo(movieId)
       .then((result) => {
-        console.log("result", result.data.content);
         const newValue = result.data.content;
-        console.log("newValue", newValue);
         formik.setValues({
           maPhim: newValue.maPhim ?? "",
           tenPhim: newValue.tenPhim ?? "",
@@ -107,13 +101,11 @@ const EditMovie = () => {
         setImage(newValue.hinhAnh);
       })
       .catch((err) => {
-        console.log("err", err);
         navigate("/*");
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieId, navigate]);
 
-  console.log("values", values);
 
   return (
     <div>
@@ -211,8 +203,7 @@ const EditMovie = () => {
           </label>
           <DatePicker
             onChange={(date, dateString) => {
-              console.log(date);
-              console.log(dateString);
+
               setFieldValue("ngayKhoiChieu", dateString);
             }}
             onBlur={() => {
@@ -315,11 +306,9 @@ const EditMovie = () => {
             onBlur={handleBlur}
             accept="image/*"
             onChange={(event) => {
-              console.log(event.target.files[0]);
               const img = event.target.files[0];
               if (img) {
                 const urlImg = URL.createObjectURL(img);
-                console.log(urlImg);
                 setImage(urlImg);
               }
               setFieldValue("hinhAnh", img);

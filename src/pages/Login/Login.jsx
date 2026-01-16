@@ -36,33 +36,10 @@ const Login = () => {
       matKhau: "",
     },
     onSubmit: (values, { resetForm }) => {
-      // const userLogin = async () => {
-      //   try {
-      //     const result = await userServ.loginServ(values);
-      //     console.log("result", result);
-      //     // setnotification("success");
-      //     messageApi.open({
-      //       type: "success",
-      //       content: result.data.message,
-      //     });
-      //     saveLocalStore(result.data.content, "user_info");
-      //     setTimeout(() => {
-      //       navigate("/");
-      //     }, 1000);
-      //   } catch (error) {
-      //     console.log("error", error);
-      //     // setnotification("fail");
-      //     messageApi.open({
-      //       type: "error",
-      //       content: error.response.data.content,
-      //     });
-      //   }
-      // };
-      // userLogin();
+
       dispatch(loginUser(values))
         .unwrap()
         .then((result) => {
-          console.log("result", result);
           openNotificationWithIcon("success", "Login Successful!", "");
           saveLocalStore(result, "userInfo");
           const userInformation = getLocalStorage("userInfo");

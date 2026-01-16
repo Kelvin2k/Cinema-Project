@@ -9,16 +9,11 @@ const CinemaSchedule = () => {
     cinemaSchedule
       .getAllCinema()
       .then((result) => {
-        console.log("result", result);
         setCinema(result.data.content);
       })
-      .catch((err) => {
-        console.log("err", err);
-      });
+      .catch((err) => {});
   }, []);
-  const renderFilmShowTime = (key) => {
-    console.log("key", key);
-  };
+  const renderFilmShowTime = (key) => {};
   return (
     <div className="py-20" id="now_showing">
       <div className="lg:container lg:mx-auto">

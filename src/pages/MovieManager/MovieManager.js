@@ -10,7 +10,6 @@ const MovieManager = () => {
   const dispatch = useDispatch();
   const { listMovie } = useSelector((state) => state.movieSlice);
   const navigate = useNavigate();
-  // const [listMovie, setListMovie] = useState([]);
 
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, title = "", description = "") => {
@@ -41,7 +40,6 @@ const MovieManager = () => {
         "Movie has been deleted successfully."
       );
     } catch (err) {
-      console.error("delete error", err);
       const errMsg =
         err?.response?.data?.content ||
         "Failed to delete movie. Please try again.";
@@ -53,15 +51,6 @@ const MovieManager = () => {
   };
 
   useEffect(() => {
-    // filmServManagement
-    //   .getAllMovie()
-    //   .then((result) => {
-    //     console.log("result", result.data.content);
-    //     setListMovie(result.data.content);
-    //   })
-    //   .catch((err) => {
-    //     console.log("err", err);
-    //   });
     dispatch(
       getAllMovieThunk({
         hoTen: "Dong",
@@ -75,11 +64,6 @@ const MovieManager = () => {
       title: "Movie Code",
       dataIndex: "maPhim",
       key: "maPhim",
-      // render: (value, record, index) => {
-      //   console.log(value);
-      //   // console.log(record);
-      //   // console.log(index);
-      // },
     },
     {
       title: "Movie Image",
@@ -104,7 +88,6 @@ const MovieManager = () => {
       title: "Action",
       key: "action",
       render: (_, record) => {
-        console.log("record", record);
 
         return (
           <div className="space-x-3 space-y-3">
@@ -122,7 +105,6 @@ const MovieManager = () => {
               <button
                 className="text-white bg-red-600 py-2 px-4 rounded-md cursor-pointer"
                 onClick={() => {
-                  console.log(record.maPhim);
                 }}
               >
                 Delete
@@ -143,7 +125,6 @@ const MovieManager = () => {
     },
   ];
 
-  console.log(listMovie);
 
   return (
     <div>

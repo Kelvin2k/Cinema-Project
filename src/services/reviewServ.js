@@ -15,7 +15,6 @@ export const reviewServ = {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         return json;
       })
       .catch((err) => console.error(err));
@@ -34,7 +33,6 @@ export const reviewServ = {
     return fetch(url, options)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         return json;
       })
       .catch((err) => console.error(err));

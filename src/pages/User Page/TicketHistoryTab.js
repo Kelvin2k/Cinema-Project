@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import React from "react";
 
 const TicketHistoryTab = ({ userData }) => {
-  console.log("userData", userData);
 
   return (
     <div className="grid grid-cols-2 gap-5">
