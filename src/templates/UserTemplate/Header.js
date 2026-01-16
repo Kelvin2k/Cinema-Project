@@ -77,24 +77,6 @@ const Header = () => {
           >
             Home Page
           </NavLink>
-          {/* <button
-            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
-            onClick={(e) => goToSection("now_showing", e)}
-          >
-            Hot Movie
-          </button>
-          <button
-            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
-            onClick={(e) => goToSection("hot_movie", e)}
-          >
-            Now Showing
-          </button>
-          <button
-            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
-            onClick={(e) => goToSection("new_release", e)}
-          >
-            New Release
-          </button> */}
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
