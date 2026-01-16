@@ -77,27 +77,28 @@ const Header = () => {
           >
             Home Page
           </NavLink>
-          <NavLink
-            className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+          <button
+            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
             onClick={(e) => goToSection("now_showing", e)}
           >
             Hot Movie
-          </NavLink>
-          <NavLink
-            className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+          </button>
+          <button
+            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
             onClick={(e) => goToSection("hot_movie", e)}
           >
             Now Showing
-          </NavLink>
-          <NavLink
-            className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+          </button>
+          <button
+            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
             onClick={(e) => goToSection("new_release", e)}
           >
             New Release
-          </NavLink>
+          </button>
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">{userName ? (
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          {userName ? (
             <p
               className="text-emerald-600 cursor-pointer hover:text-lg hover:text-emerald-800 uppercase duration-200"
               onClick={() => {
