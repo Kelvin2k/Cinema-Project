@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { removeKeyLocalStorage } from "../../utils/local";
 import { updateUserName } from "../../redux/Slice/userSlice";
 import { notification } from "antd";
@@ -9,12 +9,23 @@ const Header = () => {
   const { userName } = useSelector((state) => state.userSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, title = "", description = "") => {
     api[type]({
       title: title,
       description: description,
     });
+  };
+
+  const goToSection = (id, e) => {
+    e?.preventDefault();
+    const elementId = document.getElementById(id);
+    if (location.pathname === "/") {
+      elementId.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+    navigate("/", { state: { scrollTo: id } });
   };
 
   return (
@@ -41,6 +52,24 @@ const Header = () => {
           >
             Home Page
           </NavLink>
+          <button
+            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
+            onClick={(e) => goToSection("now_showing", e)}
+          >
+            Hot Movie
+          </button>
+          <button
+            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
+            onClick={(e) => goToSection("hot_movie", e)}
+          >
+            Now Showing
+          </button>
+          <button
+            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
+            onClick={(e) => goToSection("new_release", e)}
+          >
+            New Release
+          </button>
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
