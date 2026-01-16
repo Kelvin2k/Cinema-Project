@@ -26,7 +26,7 @@ const MovieDetail = () => {
       .catch((err) => {
         console.log("err", err);
       });
-  }, []);
+  });
 
   return (
     <div className=" mx-auto pb-10" style={{ backgroundColor: "#0B2029" }}>
