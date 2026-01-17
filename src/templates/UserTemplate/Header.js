@@ -9,7 +9,6 @@ const Header = () => {
   const { userName } = useSelector((state) => state.userSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, title = "", description = "") => {
