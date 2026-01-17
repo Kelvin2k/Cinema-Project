@@ -5,7 +5,7 @@ import { updateUserValidation } from "../../utils/validation";
 import { updateUserName } from "../../redux/Slice/userSlice";
 import { getLocalStorage, saveLocalStore } from "../../utils/local";
 import { userServ } from "../../services/userServ";
-import { message, notification } from "antd";
+import { notification } from "antd";
 
 const UpdateUserInformation = ({ userData }) => {
   const dispatch = useDispatch();

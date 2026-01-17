@@ -1,4 +1,3 @@
-import axios from "axios";
 import { adminHttps, https } from "./configServ";
 
 export const userServ = {

@@ -48,7 +48,7 @@ const BookingTicket = () => {
           "Booking failed!",
           "There is an error when booking!",
         );
-        console.log("error", err);
+        console.log("error", errMsg);
       });
 
     cinemaSchedule
