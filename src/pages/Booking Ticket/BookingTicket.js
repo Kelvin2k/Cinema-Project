@@ -35,14 +35,20 @@ const BookingTicket = () => {
         openNotificationWithIcon(
           "success",
           "Booking Successful!",
-          "Your Booking has been confirmed! Thank you!"
+          "Your Booking has been confirmed! Thank you!",
         );
+        console.log("result", result);
       })
       .catch((err) => {
         const errMsg =
           err?.response?.data?.message ||
           "Failed to add user. Please try again.";
-        openNotificationWithIcon("error", "Update User Failed", errMsg);
+        openNotificationWithIcon(
+          "error",
+          "Booking failed!",
+          "There is an error when booking!",
+        );
+        console.log("error", err);
       });
 
     cinemaSchedule
@@ -104,16 +110,16 @@ const BookingTicket = () => {
     <div>
       {contextHolder}
 
-      <div className="content container mx-auto grid grid-cols-5 gap-x-20 my-10">
+      <div className="content container mx-auto grid grid-cols-5 gap-x-10 my-10 lg:gap-x-20">
         <div
-          className="seat_booking grid grid-cols-10 col-span-3 gap-2 p-5 rounded-2xl"
+          className="seat_booking grid grid-cols-10 col-span-3 gap-1 p-3 rounded-2xl"
           style={{
             boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
           }}
         >
           {seatLayout.map((seat, index) => {
             const isSlected = selectedSeat.some(
-              (s) => s.tenGhe === seat.tenGhe
+              (s) => s.tenGhe === seat.tenGhe,
             );
             return (
               <div key={index}>
@@ -126,7 +132,7 @@ const BookingTicket = () => {
                     onClick={(e) => {
                       setSelectedSeat((prev) => {
                         const exists = prev.some(
-                          (s) => s.tenGhe === seat.tenGhe
+                          (s) => s.tenGhe === seat.tenGhe,
                         );
                         if (exists)
                           return prev.filter((s) => s.tenGhe !== seat.tenGhe);
@@ -153,7 +159,7 @@ const BookingTicket = () => {
                     onClick={(e) => {
                       setSelectedSeat((prev) => {
                         const exists = prev.some(
-                          (s) => s.tenGhe === seat.tenGhe
+                          (s) => s.tenGhe === seat.tenGhe,
                         );
                         if (exists)
                           return prev.filter((s) => s.tenGhe !== seat.tenGhe);
@@ -204,7 +210,7 @@ const BookingTicket = () => {
           </div>
         </div>
         <div
-          className="provisional_invoice p-10 rounded-lg col-span-2"
+          className="provisional_invoice p-2 lg:p-10 rounded-lg col-span-2"
           style={{
             boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
           }}
@@ -223,13 +229,13 @@ const BookingTicket = () => {
               </Modal>
               <form action="" className="mx-auto">
                 <div className="mx-auto max-w-3xl p-5 ">
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-5 text-center uppercase">
+                  <h2 className="lg:text-3xl font-bold text-gray-900 dark:text-white mb-5 text-center uppercase md:text-base text-lg">
                     Provisional Invoice
                   </h2>
                   <img
                     src={movieInfo.hinhAnh}
                     alt=""
-                    className="w-3/4 h-96 object-cover container mx-auto rounded-lg"
+                    className="w-3/4 h-56 lg:h-96 object-cover container mx-auto rounded-lg"
                   />
                   <div className="mt-6 sm:mt-8">
                     <div className="relative overflow-x-auto border-b border-gray-200 dark:border-gray-800">
@@ -237,39 +243,41 @@ const BookingTicket = () => {
                         <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">
+                              <p className="font-bold md:text-lg text-sm">
                                 Theater System:
                               </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500">
+                            <td className="p-4 text-right md:text-base text-sm font-bold dark:text-white md:w-full text-green-500">
                               {movieInfo.tenCumRap}
                             </td>
                           </tr>
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">
+                              <p className="font-bold  md:text-lg text-sm">
                                 Theater Addresss:
                               </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500">
+                            <td className="p-4 text-right md:text-base text-sm font-bold dark:text-white md:w-full text-green-500">
                               {movieInfo.diaChi}
                             </td>
                           </tr>
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">
+                              <p className="font-bold md:text-lg text-sm">
                                 Screen Number:
                               </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500">
+                            <td className="p-4 text-right md:text-base text-sm font-bold dark:text-white md:w-full text-green-500">
                               {movieInfo.tenRap}
                             </td>
                           </tr>
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">Show Time:</p>
+                              <p className="font-bold md:text-lg text-sm">
+                                Show Time:
+                              </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500">
+                            <td className="p-4 text-right md:text-base text-sm font-bold dark:text-white md:w-full text-green-500">
                               {movieInfo.ngayChieu} ~{" "}
                               <span className="text-red-500">
                                 {movieInfo.gioChieu}
@@ -278,19 +286,21 @@ const BookingTicket = () => {
                           </tr>
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">Movie Name:</p>
+                              <p className="font-bold md:text-lg text-sm">
+                                Movie Name:
+                              </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500">
+                            <td className="p-4 text-right md:text-base text-sm font-bold dark:text-white md:w-full text-green-500">
                               {movieInfo.tenPhim}
                             </td>
                           </tr>
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">
+                              <p className="font-bold md:text-lg text-sm">
                                 Seats selected:
                               </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500 flex justify-end">
+                            <td className="p-4 text-right md:text-base text-sm font-bold dark:text-white md:w-full text-green-500 flex justify-end">
                               <div className="flex w-fit gap-x-2">
                                 {selectedSeat?.map((seat, index) => {
                                   return (
@@ -315,7 +325,7 @@ const BookingTicket = () => {
                             <dt className="text-gray-500 dark:text-gray-400">
                               Original price
                             </dt>
-                            <dd className="text-base font-medium text-gray-900 dark:text-white">
+                            <dd className="md:text-base text-sm font-medium text-gray-900 dark:text-white">
                               {total}
                             </dd>
                           </dl>
@@ -323,16 +333,16 @@ const BookingTicket = () => {
                             <dt className="text-gray-500 dark:text-gray-400">
                               Savings
                             </dt>
-                            <dd className="text-base font-medium text-green-500">
+                            <dd className="md:text-base text-sm font-medium text-green-500">
                               0
                             </dd>
                           </dl>
                         </div>
                         <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
-                          <dt className="text-lg font-bold text-gray-900 dark:text-white">
+                          <dt className="md:text-lg text-sm font-bold text-gray-900 dark:text-white">
                             Total
                           </dt>
-                          <dd className="text-lg font-bold text-gray-900 dark:text-white">
+                          <dd className="md:text-lg text-sm font-bold text-gray-900 dark:text-white">
                             {total} VND
                           </dd>
                         </dl>

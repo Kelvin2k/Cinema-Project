@@ -1,5 +1,5 @@
 import axios from "axios";
-import { https } from "./configServ";
+import { adminHttps, https } from "./configServ";
 
 export const userServ = {
   loginServ: (data) => {
@@ -9,26 +9,16 @@ export const userServ = {
     return https.post("/api/QuanLyNguoiDung/DangKy", data);
   },
 
-  updateUserInfo_User: async (data) => {
-    try {
-      const result = await axios.post(
-        "https://movienew.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_AUTHORIZATION_TOKEN}`,
-            TokenCybersoft: process.env.REACT_APP_TOKEN_CYBERSOFT,
-          },
-        }
-      );
-
-      return result.data.content;
-    } catch (error) {
-    }
+  updateUserInfo_User: (data) => {
+    return adminHttps.post(
+      "/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+      data,
+    );
   },
+
   findUser: (key) => {
     return https.get(
-      `/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP01&tuKhoa=${key}`
+      `/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP01&tuKhoa=${key}`,
     );
   },
   fetchUserDataList: () => {
@@ -36,34 +26,20 @@ export const userServ = {
   },
   removeUser: (userAccount) => {
     return https.delete(
-      `/api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${userAccount}`
+      `/api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${userAccount}`,
     );
   },
   addUser: (data) => {
     return https.post("/api/QuanLyNguoiDung/ThemNguoiDung", data);
   },
-  fetchUserData_User: async (accountId) => {
-    try {
-      const result = await axios.post(
-        `https://movienew.cybersoft.edu.vn/api/QuanLyNguoiDung/LayThongTinNguoiDung?taiKhoan=${accountId}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_AUTHORIZATION_TOKEN}`,
-            TokenCybersoft: process.env.REACT_APP_TOKEN_CYBERSOFT,
-          },
-        }
-      );
-      return result.data;
-    } catch (error) {
-    }
-  },
   fetchUserData_Admin: (accountId) => {
     return https.post(
-      `/api/QuanLyNguoiDung/LayThongTinNguoiDung?taiKhoan=${accountId}`
+      `/api/QuanLyNguoiDung/LayThongTinNguoiDung?taiKhoan=${accountId}`,
     );
   },
-  updatUserInfo_Admin: (data) => {
-    return https.post("/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung", data);
+  fetchUserData_User: (accountId) => {
+    return adminHttps.post(
+      `/api/QuanLyNguoiDung/LayThongTinNguoiDung?taiKhoan=${accountId}`,
+    );
   },
 };

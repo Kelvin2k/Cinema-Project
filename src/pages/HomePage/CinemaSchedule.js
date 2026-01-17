@@ -13,17 +13,18 @@ const CinemaSchedule = () => {
       })
       .catch((err) => {});
   }, []);
+
   const renderFilmShowTime = (key) => {};
   return (
     <div className="py-20" id="now_showing">
-      <div className="lg:container lg:mx-auto">
+      <div className="hidden md:block container lg:mx-auto">
         <Tabs
           defaultActiveKey="1"
           tabPlacement={"start"}
           onChange={(key) => {
             renderFilmShowTime();
           }}
-          //   style={{ height: 220 }}
+          // style={{ width: 120 }}
           items={cinema?.map((item, index) => {
             return {
               label: (

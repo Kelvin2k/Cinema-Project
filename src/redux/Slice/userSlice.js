@@ -18,7 +18,7 @@ export const loginUser = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response.data.message);
     }
-  }
+  },
 );
 
 const userSlice = createSlice({
@@ -38,6 +38,7 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.userName = action.payload.hoTen;
+      state.userInfo = action.payload.userInfo;
     });
   },
 });

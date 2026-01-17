@@ -33,14 +33,14 @@ const Header = () => {
       {contextHolder}
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="mx-auto flex max-w-7xl items-center justify-between p-2 lg:px-8"
       >
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
               src="https://static.vecteezy.com/system/resources/previews/022/580/623/non_2x/movie-media-letter-logo-design-illustration-free-vector.jpg"
-              className="h-20 w-auto"
+              className="h-16 w-auto lg:h-22"
               alt="Flowbite Logo"
             />
           </a>
@@ -69,27 +69,27 @@ const Header = () => {
             </svg>
           </button>
         </div> */}
-        <div className="flex gap-x-5 lg:flex lg:gap-x-12">
+        <div className="flex gap-x-2 lg:gap-x-12">
           <NavLink
-            className="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+            className="text-xs/6 md:text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200"
             to={"/"}
           >
             Home Page
           </NavLink>
           <button
-            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
+            className="text-xs/6 md:text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200 hover:text-gray-600"
             onClick={(e) => goToSection("hot_movie", e)}
           >
             Hot Movie
           </button>
           <button
-            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
+            className="text-xs/6 md:text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200 hover:text-gray-600"
             onClick={(e) => goToSection("now_showing", e)}
           >
             Now Showing
           </button>
           <button
-            className="text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-gray-600"
+            className="text-xs/6 md:text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200 hover:text-gray-600"
             onClick={(e) => goToSection("new_release", e)}
           >
             New Release
@@ -115,7 +115,7 @@ const Header = () => {
                   openNotificationWithIcon(
                     "success",
                     "Log Out Successful",
-                    "You have been log out"
+                    "You have been log out",
                   );
                   setTimeout(() => {
                     navigate("/login");

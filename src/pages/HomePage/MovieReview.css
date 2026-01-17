@@ -7,7 +7,7 @@
 }
 
 .slick-slide .ant-card {
-  width: 500px !important;
+  width: 350px !important;
 }
 
 .slick-slide .ant-card {
@@ -18,3 +18,9 @@
 .ant-card-head {
   border: none !important;
 }
+
+/* .ant-tabs-nav-list {
+  @media (min-width: 576px) {
+    width: 150px;
+  }
+} */

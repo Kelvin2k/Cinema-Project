@@ -34,7 +34,8 @@ const UserPage = () => {
     userServ
       .fetchUserData_User(accountId)
       .then((result) => {
-        setUserData(result.content);
+        console.log("result", result);
+        setUserData(result.data.content);
         dispatch(endedLoading());
       })
       .catch((err) => {

@@ -10,3 +10,27 @@ export const https = axios.create({
     TokenCybersoft: process.env.REACT_APP_TOKEN_CYBERSOFT,
   },
 });
+
+console.log("Axios headers:", https.defaults.headers);
+
+axios.interceptors.request.use(
+  function (config) {
+    if (dataUser) {
+      header.Authorization = getLocalStorage("userInfo").dataUser;
+    }
+    i;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  },
+);
+
+export const adminHttps = axios.create({
+  baseURL: "https://movienew.cybersoft.edu.vn",
+  timeout: 15000,
+  headers: {
+    Authorization: "Bearer " + process.env.REACT_APP_AUTHORIZATION_TOKEN,
+    TokenCybersoft: process.env.REACT_APP_TOKEN_CYBERSOFT,
+  },
+});

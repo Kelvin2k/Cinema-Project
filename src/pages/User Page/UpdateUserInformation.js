@@ -5,11 +5,17 @@ import { updateUserValidation } from "../../utils/validation";
 import { updateUserName } from "../../redux/Slice/userSlice";
 import { getLocalStorage, saveLocalStore } from "../../utils/local";
 import { userServ } from "../../services/userServ";
-import { message } from "antd";
+import { message, notification } from "antd";
 
 const UpdateUserInformation = ({ userData }) => {
   const dispatch = useDispatch();
-  const [messageApi, contextHolder] = message.useMessage();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -28,11 +34,18 @@ const UpdateUserInformation = ({ userData }) => {
         .then((result) => {
           saveLocalStore("userInfo", result);
           dispatch(updateUserName(result.hoTen));
-          messageApi.success({ content: "Update Successfully" });
+          openNotificationWithIcon(
+            "success",
+            "Update User Successful",
+            "Your information has been updated successfully.",
+          );
           resetForm();
         })
         .catch((err) => {
-          messageApi.error({ content: err.response.data.message });
+          const errMsg =
+            err?.response?.data?.message ||
+            "Failed to add user. Please try again.";
+          openNotificationWithIcon("error", "Update User Failed", errMsg);
         });
     },
   });

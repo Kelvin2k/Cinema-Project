@@ -15,8 +15,35 @@ const MovieReviews = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToScroll: 3,
+    autoplay: true,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
+        },
+      },
+    ],
   };
+
+  useEffect(() => {
+    if (listReviews.length) {
+      setTimeout(() => window.dispatchEvent(new Event("resize")), 100);
+    }
+  }, [listReviews]);
 
   useEffect(() => {
     (async () => {
@@ -28,7 +55,7 @@ const MovieReviews = () => {
         const listFilmReview = [];
         for (const movie of listHotMovie) {
           const reviews = await reviewServ.fetchUserReviewBasedOnFilmId(
-            movie.id
+            movie.id,
           );
           listFilmReview.push({
             ...reviews,
@@ -38,11 +65,9 @@ const MovieReviews = () => {
         }
 
         setListReviews(listFilmReview);
-      } catch (error) {
-      }
+      } catch (error) {}
     })();
   }, []);
-
 
   return (
     <div className="my-10 space-y-8" id="new_release">
@@ -51,24 +76,23 @@ const MovieReviews = () => {
       </h2>
       {listReviews?.map((item, index) => {
         const newListHotMovie = listHotMovie.filter(
-          (movie) => movie.id === item.id
+          (movie) => movie.id === item.id,
         );
-
 
         return (
           <div key={index} className="mb-10 ">
             <div className="mb-4 ">
-              <div className="grid grid-cols-2 gap-10">
+              <div className="p-5 lg:p-0 grid grid-cols-1 lg:grid-cols-2 gap-10">
                 <img
                   src={`https://image.tmdb.org/t/p/original${newListHotMovie[0].backdrop_path}`}
                   alt={item.title || "Movie Poster"}
-                  className="w-full object-center rounded-lg"
+                  className="w-full h-full object-cover rounded-lg"
                 />
-                <div className="space-y-5">
+                <div className="space-y-5 flex flex-col justify-center items-center lg:block">
                   <h2 className="text-3xl font-bold text-white">
                     {newListHotMovie[0].original_title}
                   </h2>
-                  <p className="text-gray-400 text-lg">
+                  <p className="text-gray-400 text-lg px-10 lg:p-0">
                     {newListHotMovie[0].overview}
                   </p>
                   <p className="text-red-500 font-bold">
@@ -100,7 +124,7 @@ const MovieReviews = () => {
                       <Card
                         size="default"
                         title={
-                          <div className="grid grid-cols-2 py-3 gap-3">
+                          <div className="grid lg:grid-cols-2 py-3 gap-3">
                             <img
                               src={imgURL}
                               alt=""

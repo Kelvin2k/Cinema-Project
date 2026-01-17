@@ -25,12 +25,38 @@ const HotMovie = () => {
       .catch((err) => {});
   });
 
+  useEffect(() => {
+    if (hotMovie.length) {
+      window.dispatchEvent(new Event("resize"), 100);
+    }
+  }, [hotMovie]);
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 568,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+    ],
   };
 
   const handleCancel = () => {
@@ -38,7 +64,7 @@ const HotMovie = () => {
   };
 
   return (
-    <div className="" id="hot_movie">
+    <div className="px-2" id="hot_movie">
       <h2 className="font-bold text-5xl text-center my-5 text-red-500">
         Hot Movie
       </h2>

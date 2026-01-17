@@ -22,8 +22,7 @@ const CinemaShowTime = ({ cinemaCode }) => {
         dispatch(endedLoading());
       });
   }, [cinemaCode, dispatch]);
-  const renderFilmShowTime = () => {
-  };
+  const renderFilmShowTime = () => {};
 
   return (
     <div className="">
@@ -33,15 +32,17 @@ const CinemaShowTime = ({ cinemaCode }) => {
         onChange={() => {
           renderFilmShowTime();
         }}
-        //   style={{ height: 220 }}
+        // style={{ width: 220 }}
         items={cinemaDetail?.map((theater, index) => {
           return {
             label: (
               <div className="text-left" key={theater.index}>
-                <h2 className="uppercase text-green-500 text-base">
+                <h2 className="uppercase text-green-500 text-xs md:text-sm lg:text-base">
                   {theater.tenCumRap}
                 </h2>
-                <p className="text-gray-300">{theater.diaChi}</p>
+                <p className="text-gray-300 text-xs lg:text-sm">
+                  {theater.diaChi}
+                </p>
                 <p className="text-red-500">[Details]</p>
               </div>
             ),
@@ -63,23 +64,26 @@ const CinemaShowTime = ({ cinemaCode }) => {
                           </span>
                           {film.tenPhim}
                         </p>
-                        <div className="grid grid-cols-2 w-full lg:w-2/3 md:gap-3">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 w-full lg:w-2/3 md:gap-3">
                           {film.lstLichChieuTheoPhim
                             ?.slice(0, 5)
                             .map((filmShowTime, index) => {
                               const formattedDate = dayjs(
-                                filmShowTime.ngayChieuGioChieu
+                                filmShowTime.ngayChieuGioChieu,
                               ).format("DD/MM/YYYY");
                               const formattedTime = dayjs(
-                                filmShowTime.ngayChieuGioChieu
+                                filmShowTime.ngayChieuGioChieu,
                               ).format("HH:mm");
                               return (
-                                <div className="mt-2 col-span-1" key={index}>
+                                <div
+                                  className="mt-2 col-span-1 w-full"
+                                  key={index}
+                                >
                                   <Link
                                     to={`/detail_movie/${film.maPhim}`}
                                     className=""
                                   >
-                                    <p className="rounded-sm! bg-gray-100! text-green-500! w-fit! px-2! py-1! cursor-pointer">
+                                    <p className="rounded-sm! bg-gray-100! text-green-500! w-fit! px-2! py-1! cursor-pointer text-xs lg:text-sm">
                                       {formattedDate} ~
                                       <span className="text-red-500 ml-1">
                                         {formattedTime}
