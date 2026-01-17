@@ -71,25 +71,25 @@ const Header = () => {
         </div> */}
         <div className="flex gap-x-2 lg:gap-x-12">
           <NavLink
-            className="text-xs/6 md:text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200"
+            className="text-xs/6 md:text-sm/6 lg:text-base/6 xl:text-lg/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200"
             to={"/"}
           >
             Home Page
           </NavLink>
           <button
-            className="text-xs/6 md:text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200 hover:text-gray-600"
+            className="text-xs/6 md:text-sm/6 lg:text-base/6 xl:text-lg/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200"
             onClick={(e) => goToSection("hot_movie", e)}
           >
             Hot Movie
           </button>
           <button
-            className="text-xs/6 md:text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200 hover:text-gray-600"
+            className="text-xs/6 md:text-sm/6 lg:text-base/6 xl:text-lg/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200"
             onClick={(e) => goToSection("now_showing", e)}
           >
             Now Showing
           </button>
           <button
-            className="text-xs/6 md:text-sm/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200 hover:text-gray-600"
+            className="text-xs/6 md:text-sm/6 lg:text-base/6 xl:text-lg/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200"
             onClick={(e) => goToSection("new_release", e)}
           >
             New Release
