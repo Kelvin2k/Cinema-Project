@@ -16,7 +16,7 @@ console.log("Axios headers:", https.defaults.headers);
 axios.interceptors.request.use(
   function (config) {
     if (dataUser) {
-      headers.Authorization = getLocalStorage("userInfo").dataUser;
+      config.headers.Authorization = getLocalStorage("userInfo").dataUser;
     }
     return config;
   },
