@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { cinemaSchedule } from "../../services/cinemaSchedule";
-import { Radio, Rate, Tabs } from "antd";
-import { filmServManagement } from "../../services/filmServManagement";
+import { Tabs } from "antd";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { endedLoading, startedLoading } from "../../redux/Slice/loadingSlice";
@@ -19,7 +18,6 @@ const MovieDetail = () => {
     cinemaSchedule
       .getMovieShowTime(params.movieId)
       .then((result) => {
-        console.log("result", result);
         setListCinema(result.data.content.heThongRapChieu);
         setMovieInfo(result.data.content);
         dispatch(endedLoading());
@@ -27,7 +25,7 @@ const MovieDetail = () => {
       .catch((err) => {
         console.log("err", err);
       });
-  }, []);
+  }, [params.movieId, dispatch]);
 
   return (
     <div className=" mx-auto pb-10" style={{ backgroundColor: "#0B2029" }}>
@@ -53,13 +51,13 @@ const MovieDetail = () => {
         </div>
       </div>
 
-      <div className="content_up grid grid-cols-2 text-white my-5 gap-x-10 container mx-auto">
+      <div className="content_up grid grid-cols-1 p-5 md:p-0 md:grid-cols-2 text-white my-5 gap-x-10 container mx-auto">
         <img
           src={movieInfo.hinhAnh}
           alt=""
           className="w-full min-h-[600px] object-cover rounded-xl"
         />
-        <div className="content_left space-y-3 h-full flex flex-col">
+        <div className="content_left space-y-3 h-full flex flex-col mt-5 md:mt-0">
           <p className="">
             Release Day:
             <span className="text-red-500 ml-3">
@@ -82,10 +80,8 @@ const MovieDetail = () => {
             allow="autoplay"
           ></iframe>
           <button
-            className="bg-red-500 w-fit text-white text-2xl px-6 py-4 rounded mt-5 cursor-pointer hover:bg-red-700 duration-300"
+            className="bg-red-500 w-fit text-white text-sm px-3 py-2 md:text-2xl md:px-6 md:py-4 rounded mt-5 cursor-pointer hover:bg-red-700 duration-300"
             onClick={() => {
-              console.log(document.querySelector(".content_down"));
-
               document
                 .querySelector(".content_down")
                 .scrollIntoView({ behavior: "smooth" });
@@ -103,17 +99,23 @@ const MovieDetail = () => {
           style={{ padding: "20px" }}
           items={listCinema?.map((cinema, index) => {
             return {
-              label: <img src={cinema.logo} alt="" className="w-28" />,
+              label: (
+                <img
+                  src={cinema.logo}
+                  alt=""
+                  className="w-10 sm:w-20! md:w-26!"
+                />
+              ),
               key: cinema.maHeThongRap,
               children: (
                 <div className="space-y-5">
                   {cinema.cumRapChieu?.map((showTime, index) => {
                     return (
                       <div key={showTime.maCumRap}>
-                        <h3 className="text-lime-500 font-bold text-xl mb-5">
+                        <h3 className="text-lime-500 font-bold text-base md:text-xl mb-5">
                           {showTime.tenCumRap}
                         </h3>
-                        <div className="grid grid-cols-4 gap-5">
+                        <div className="grid grid-cols-2 sm:grid-cols-3! md:grid-cols-4! gap-5">
                           {showTime.lichChieuPhim?.map(
                             (showSchedule, index) => {
                               return (
@@ -122,24 +124,24 @@ const MovieDetail = () => {
                                   onClick={(e) => {
                                     e.preventDefault();
                                     navigate(
-                                      `/booking_ticket/${showSchedule.maLichChieu}`
+                                      `/booking_ticket/${showSchedule.maLichChieu}`,
                                     );
                                   }}
                                 >
-                                  <p className="text-green-600 bg-gray-100 w-fit rounded-md px-3 py-2 hover:bg-gray-400 hover:text-white duration-300 group">
+                                  <p className="text-green-600 bg-gray-100 w-fit rounded-md px-3 py-2 hover:bg-gray-400 hover:text-white duration-300 group text-2xs">
                                     {dayjs(
-                                      showSchedule.ngayChieuGioChieu
+                                      showSchedule.ngayChieuGioChieu,
                                     ).format("DD/MM/YYYY")}{" "}
                                     ~
                                     <span className="text-red-500 ml-1 group-hover:text-white">
                                       {dayjs(
-                                        showSchedule.ngayChieuGioChieu
+                                        showSchedule.ngayChieuGioChieu,
                                       ).format("HH:mm")}
                                     </span>
                                   </p>
                                 </NavLink>
                               );
-                            }
+                            },
                           )}
                         </div>
                       </div>

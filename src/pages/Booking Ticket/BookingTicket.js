@@ -1,28 +1,75 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { cinemaSchedule } from "../../services/cinemaSchedule";
-import { Button, message } from "antd";
+import { Modal, notification } from "antd";
 import { useDispatch } from "react-redux";
 import { endedLoading, startedLoading } from "../../redux/Slice/loadingSlice";
 
 const BookingTicket = () => {
-  console.log("rerender");
-
   const params = useParams();
   const { showTimeId } = params;
-  const seat = new Array(160).fill("");
   const [seatLayout, setSeatLayout] = useState([]);
   const [movieInfo, setmovieInfo] = useState({});
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [total, setTotal] = useState(0);
-  const [messageApi, contextHolder] = message.useMessage();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const success = () => {
-    messageApi.open({
-      type: "success",
-      content: "Congratulations! You booking has been confirmed!",
-      duration: 5,
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+    const payload = {
+      maLichChieu: Number(showTimeId),
+      danhSachVe: selectedSeat.map(({ maGhe, giaVe }) => ({
+        maGhe,
+        giaVe,
+      })),
+    };
+
+    cinemaSchedule
+      .bookTicket(payload)
+      .then((result) => {
+        openNotificationWithIcon(
+          "success",
+          "Booking Successful!",
+          "Your Booking has been confirmed! Thank you!",
+        );
+        console.log("result", result);
+      })
+      .catch((err) => {
+        const errMsg =
+          err?.response?.data?.message ||
+          "Failed to add user. Please try again.";
+        openNotificationWithIcon(
+          "error",
+          "Booking failed!",
+          "There is an error when booking!",
+        );
+        console.log("error", errMsg);
+      });
+
+    cinemaSchedule
+      .getShowTimeSeat(showTimeId)
+      .then((result) => {
+        dispatch(endedLoading());
+        setSeatLayout(result.data.content.danhSachGhe);
+        setmovieInfo(result.data.content.thongTinPhim);
+        setSelectedSeat([]);
+        setTotal(0);
+      })
+      .catch((err) => {});
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
     });
   };
 
@@ -46,33 +93,28 @@ const BookingTicket = () => {
       .getShowTimeSeat(showTimeId)
       .then((result) => {
         dispatch(endedLoading());
-        console.log("result", result.data.content);
         setSeatLayout(result.data.content.danhSachGhe);
         setmovieInfo(result.data.content.thongTinPhim);
+        dispatch(endedLoading());
       })
       .catch((err) => {
-        console.log("err", err);
+        dispatch(endedLoading());
+        navigate("/*");
       });
-  }, []);
+  }, [dispatch, navigate, showTimeId]);
   useEffect(() => {
     setTotal(selectedSeat.reduce((sum, seat) => sum + (seat.giaVe || 0), 0));
   }, [selectedSeat]);
 
-  console.log("selectedSeat", selectedSeat);
-
   return (
-    <div>
+    <div className="container mx-auto">
       {contextHolder}
-      <div className="content container mx-auto grid grid-cols-5 gap-x-20 my-10">
-        <div
-          className="seat_booking grid grid-cols-10 col-span-3 gap-2 p-5 rounded-2xl"
-          style={{
-            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-          }}
-        >
+
+      <div className="content grid grid-cols-1 md:grid-cols-5! sm:gap-x-5 py-10 lg:gap-x-20">
+        <div className="seat_booking grid grid-cols-5 lg:grid-cols-8! col-span-full sm:col-span-3 gap-3 p-3 rounded-2xl">
           {seatLayout.map((seat, index) => {
             const isSlected = selectedSeat.some(
-              (s) => s.tenGhe === seat.tenGhe
+              (s) => s.tenGhe === seat.tenGhe,
             );
             return (
               <div key={index}>
@@ -85,7 +127,7 @@ const BookingTicket = () => {
                     onClick={(e) => {
                       setSelectedSeat((prev) => {
                         const exists = prev.some(
-                          (s) => s.tenGhe === seat.tenGhe
+                          (s) => s.tenGhe === seat.tenGhe,
                         );
                         if (exists)
                           return prev.filter((s) => s.tenGhe !== seat.tenGhe);
@@ -112,7 +154,7 @@ const BookingTicket = () => {
                     onClick={(e) => {
                       setSelectedSeat((prev) => {
                         const exists = prev.some(
-                          (s) => s.tenGhe === seat.tenGhe
+                          (s) => s.tenGhe === seat.tenGhe,
                         );
                         if (exists)
                           return prev.filter((s) => s.tenGhe !== seat.tenGhe);
@@ -143,79 +185,50 @@ const BookingTicket = () => {
               </div>
             );
           })}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 whitespace-nowrap">
-              <div className="h-8 w-8 rounded bg-gray-400 "></div>
-              <span className="font-medium">Sold Out</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded bg-gray-200"></div>
-              <span className="font-medium">Normal</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded bg-orange-400"></div>
-              <span className="font-medium">VIP</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded bg-green-500"></div>
-              <span className="font-medium">Selecting</span>
-            </div>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4! gap-4 col-span-full md:hidden my-5">
+          <div className="flex items-center gap-2 whitespace-nowrap">
+            <div className="h-8 w-8 rounded bg-gray-400 "></div>
+            <span className="font-medium text-white text-sm md:text-lg">
+              Sold Out
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded bg-gray-200"></div>
+            <span className="font-medium text-white">Normal</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded bg-orange-400"></div>
+            <span className="font-medium text-white">VIP</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded bg-green-500"></div>
+            <span className="font-medium text-white">Selecting</span>
           </div>
         </div>
-        <div
-          className="provisional_invoice p-10 rounded-lg col-span-2"
-          style={{
-            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-          }}
-        >
+
+        <div className="provisional_invoice p-0 lg:pr-10 rounded-lg col-span-full md:mx-0 md:w-full  md:col-span-2!">
           <div>
-            <section className="bg-white antialiased dark:bg-gray-900">
-              <form
-                action=""
-                className="mx-auto"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  console.log("hellO");
-                  const payload = {
-                    maLichChieu: Number(showTimeId),
-                    danhSachVe: selectedSeat.map(({ maGhe, giaVe }) => ({
-                      maGhe,
-                      giaVe,
-                    })),
-                  };
-
-                  cinemaSchedule
-                    .bookTicket(payload)
-                    .then((result) => {
-                      success();
-                    })
-                    .catch((err) => {
-                      console.log("err", err);
-                    });
-
-                  cinemaSchedule
-                    .getShowTimeSeat(showTimeId)
-                    .then((result) => {
-                      dispatch(endedLoading());
-                      console.log("result", result.data.content);
-                      setSeatLayout(result.data.content.danhSachGhe);
-                      setmovieInfo(result.data.content.thongTinPhim);
-                      setSelectedSeat([]);
-                      setTotal(0);
-                    })
-                    .catch((err) => {
-                      console.log("err", err);
-                    });
-                }}
+            <section className="bg-white antialiased dark:bg-gray-900 rounded-lg">
+              <Modal
+                title="Check Out Confirmation"
+                closable={{ "aria-label": "Cusstom Close Button" }}
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                centered={true}
               >
-                <div className="mx-auto max-w-3xl">
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-5 text-center uppercase">
+                <p>Are you sure you want to complete your order?</p>
+              </Modal>
+              <form action="" className="mx-auto h-fit">
+                <div className="mx-auto md:max-w-3xl p-5 lg:p-5 w-full">
+                  <h2 className="lg:text-3xl font-bold text-gray-900 dark:text-white mb-5 text-center uppercase md:text-base text-lg">
                     Provisional Invoice
                   </h2>
                   <img
                     src={movieInfo.hinhAnh}
                     alt=""
-                    className="w-3/4 h-96 object-cover container mx-auto rounded-lg"
+                    className="w-3/4 h-56 lg:h-96 object-cover container mx-auto rounded-lg"
                   />
                   <div className="mt-6 sm:mt-8">
                     <div className="relative overflow-x-auto border-b border-gray-200 dark:border-gray-800">
@@ -223,39 +236,41 @@ const BookingTicket = () => {
                         <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">
+                              <p className="font-bold md:text-base lg:text-lg text-sm">
                                 Theater System:
                               </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500">
+                            <td className="p-4 text-right md:text-base lg:text-lg text-sm font-bold dark:text-white md:w-full text-green-500">
                               {movieInfo.tenCumRap}
                             </td>
                           </tr>
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">
+                              <p className="font-bold md:text-base lg:text-lg text-sm">
                                 Theater Addresss:
                               </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500">
+                            <td className="p-4 text-right md:text-base lg:text-lg text-sm font-bold dark:text-white md:w-full text-green-500">
                               {movieInfo.diaChi}
                             </td>
                           </tr>
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">
+                              <p className="font-bold md:text-base lg:text-lg text-sm">
                                 Screen Number:
                               </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500">
+                            <td className="p-4 text-right md:text-base lg:text-lg text-sm font-bold dark:text-white md:w-full text-green-500">
                               {movieInfo.tenRap}
                             </td>
                           </tr>
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">Show Time:</p>
+                              <p className="font-bold md:text-base lg:text-lg text-sm">
+                                Show Time:
+                              </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500">
+                            <td className="p-4 text-right md:text-base lg:text-lg text-sm font-bold dark:text-white md:w-full text-green-500">
                               {movieInfo.ngayChieu} ~{" "}
                               <span className="text-red-500">
                                 {movieInfo.gioChieu}
@@ -264,22 +279,23 @@ const BookingTicket = () => {
                           </tr>
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">Movie Name:</p>
+                              <p className="font-bold md:text-base lg:text-lg text-sm">
+                                Movie Name:
+                              </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500">
+                            <td className="p-4 text-right md:text-base lg:text-lg text-sm font-bold dark:text-white md:w-full text-green-500">
                               {movieInfo.tenPhim}
                             </td>
                           </tr>
                           <tr className="table-row">
                             <td className="whitespace-nowrap py-4 md:w-full">
-                              <p className="font-bold text-lg">
+                              <p className="font-bold md:text-base lg:text-lg text-sm">
                                 Seats selected:
                               </p>
                             </td>
-                            <td className="p-4 text-right text-base font-bold dark:text-white md:w-full text-green-500 flex justify-end">
-                              <div className="flex w-fit gap-x-2">
+                            <td className="p-4 text-right md:text-base text-sm font-bold dark:text-white md:w-full text-green-500 flex justify-end">
+                              <div className="grid grid-cols-2 w-fit gap-x-2">
                                 {selectedSeat?.map((seat, index) => {
-                                  console.log("seat", seat);
                                   return (
                                     <p className="" key={index}>
                                       Seat {seat.tenGhe}
@@ -302,7 +318,7 @@ const BookingTicket = () => {
                             <dt className="text-gray-500 dark:text-gray-400">
                               Original price
                             </dt>
-                            <dd className="text-base font-medium text-gray-900 dark:text-white">
+                            <dd className="md:text-base text-sm font-medium text-gray-900 dark:text-white">
                               {total}
                             </dd>
                           </dl>
@@ -310,16 +326,16 @@ const BookingTicket = () => {
                             <dt className="text-gray-500 dark:text-gray-400">
                               Savings
                             </dt>
-                            <dd className="text-base font-medium text-green-500">
+                            <dd className="md:text-base text-sm font-medium text-green-500">
                               0
                             </dd>
                           </dl>
                         </div>
                         <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
-                          <dt className="text-lg font-bold text-gray-900 dark:text-white">
+                          <dt className="md:text-lg text-sm font-bold text-gray-900 dark:text-white">
                             Total
                           </dt>
-                          <dd className="text-lg font-bold text-gray-900 dark:text-white">
+                          <dd className="md:text-lg text-sm font-bold text-gray-900 dark:text-white">
                             {total} VND
                           </dd>
                         </dl>
@@ -347,16 +363,22 @@ const BookingTicket = () => {
                           of use of the Flowbite marketplace{" "}
                         </label>
                       </div> */}
-                      <div className="gap-4 sm:flex sm:items-center">
+                      <div className="gap-4 flex items-center justify-center mt-4">
                         <button
                           type="button"
-                          className="w-full rounded-lg  border border-gray-200 px-5  py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 cursor-pointer duration-300 bg-gray-200"
+                          className="rounded-lg  border border-gray-200 px-5  py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 cursor-pointer duration-300 bg-gray-200 w-fit"
+                          onClick={() => {
+                            navigate(-1);
+                          }}
                         >
                           Return
                         </button>
                         <button
-                          type="submit"
-                          className="mt-4 flex w-full items-center justify-center rounded-lg bg-primary-700  px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300  dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:mt-0 bg-red-500 hover:bg-red-700 cursor-pointer duration-300"
+                          type="button"
+                          className=" flex items-center justify-center rounded-lg bg-primary-700  px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300  dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:mt-0 bg-red-500 hover:bg-red-700 cursor-pointer duration-300 w-fit"
+                          onClick={() => {
+                            showModal(true);
+                          }}
                         >
                           Click to buy!
                         </button>
@@ -366,6 +388,24 @@ const BookingTicket = () => {
                 </div>
               </form>
             </section>
+          </div>
+        </div>
+        <div className="md:flex! mt-2 pl-3 items-center gap-4 col-span-full hidden">
+          <div className="flex items-center gap-2 whitespace-nowrap">
+            <div className="h-8 w-8 rounded bg-gray-400 "></div>
+            <span className="font-medium text-white">Sold Out</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded bg-gray-200"></div>
+            <span className="font-medium text-white">Normal</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded bg-orange-400"></div>
+            <span className="font-medium text-white">VIP</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded bg-green-500"></div>
+            <span className="font-medium text-white">Selecting</span>
           </div>
         </div>
       </div>

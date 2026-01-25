@@ -1,32 +1,51 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { removeKeyLocalStorage } from "../../utils/local";
 import { updateUserName } from "../../redux/Slice/userSlice";
+import { notification } from "antd";
 
 const Header = () => {
   const { userName } = useSelector((state) => state.userSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
+
+  const goToSection = (id, e) => {
+    e?.preventDefault();
+    const elementId = document.getElementById(id);
+    if (location.pathname === "/") {
+      elementId.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+    navigate("/", { state: { scrollTo: id } });
+  };
 
   return (
     <header className="bg-white">
+      {contextHolder}
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="mx-auto flex max-w-7xl items-center justify-between p-2 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-              alt=""
-              className="h-8 w-auto"
+              src="https://static.vecteezy.com/system/resources/previews/022/580/623/non_2x/movie-media-letter-logo-design-illustration-free-vector.jpg"
+              className="h-16 w-auto lg:h-22"
+              alt="Flowbite Logo"
             />
           </a>
         </div>
-        <div className="flex lg:hidden">
+        {/* <div className="flex lg:hidden">
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -49,56 +68,39 @@ const Header = () => {
               />
             </svg>
           </button>
-        </div>
-        <el-popover-group className="hidden lg:flex lg:gap-x-12">
+        </div> */}
+        <div className="flex gap-5  lg:gap-x-8">
           <NavLink
-            className={({ isActive, isPending }) => {
-              return isActive
-                ? "text-sm/6 font-semibold text-red-500 cursor-pointer"
-                : "text-sm/6 font-semibold text-gray-900 cursor-pointer";
-            }}
+            className="text-sm/6 md:text-base/6 lg:text-lg/6 xl:text-xl/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200"
             to={"/"}
           >
             Home Page
           </NavLink>
-          <NavLink
-            className={({ isActive, isPending }) => {
-              return isActive
-                ? "text-sm/6 font-semibold text-red-500 cursor-pointer "
-                : "text-sm/6 font-semibold text-gray-900 cursor-pointer";
-            }}
-            to={"/cinema"}
+          <button
+            className="text-sm/6 md:text-base/6 lg:text-lg/6 xl:text-xl/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200"
+            onClick={(e) => goToSection("hot_movie", e)}
           >
-            Cinema
-          </NavLink>
-          <NavLink
-            className={({ isActive, isPending }) => {
-              return isActive
-                ? "text-sm/6 font-semibold text-red-500 cursor-pointer"
-                : "text-sm/6 font-semibold text-gray-900 cursor-pointer";
-            }}
-            to={"/news"}
+            Hot Movie
+          </button>
+          <button
+            className="text-sm/6 md:text-base/6 lg:text-lg/6 xl:text-xl/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200"
+            onClick={(e) => goToSection("now_showing", e)}
           >
-            News
-          </NavLink>
-          <NavLink
-            className={({ isActive, isPending }) => {
-              return isActive
-                ? "text-sm/6 font-semibold text-red-500 cursor-pointer"
-                : "text-sm/6 font-semibold text-gray-900 cursor-pointer";
-            }}
-            to={"/application"}
+            Now Showing
+          </button>
+          <button
+            className="text-sm/6 md:text-base/6 lg:text-lg/6 xl:text-xl/6 font-semibold text-gray-900 cursor-pointer hover:text-red-500 duration-200"
+            onClick={(e) => goToSection("new_release", e)}
           >
-            Application
-          </NavLink>
-        </el-popover-group>
+            New Release
+          </button>
+        </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="flex lg:flex lg:flex-1 lg:justify-end">
           {userName ? (
             <p
-              className="text-emerald-600 cursor-pointer hover:text-lg hover:text-emerald-800 uppercase duration-200"
+              className="text-emerald-600 cursor-pointer hover:text-lg hover:text-emerald-800 uppercase duration-200 text-xs/6 md:text-sm/6 lg:text-base/6 xl:text-lg/6"
               onClick={() => {
-                console.log("hello");
                 navigate("/profile");
               }}
             >
@@ -107,11 +109,17 @@ const Header = () => {
                 type="button"
                 className="font-semibold text-red-500 text-base cursor-pointer ml-3  duration-200 hover:text-lg"
                 onClick={(e) => {
-                  console.log("hello");
                   e.stopPropagation();
                   removeKeyLocalStorage("userInfo");
                   dispatch(updateUserName(""));
-                  navigate("/login");
+                  openNotificationWithIcon(
+                    "success",
+                    "Log Out Successful",
+                    "You have been log out",
+                  );
+                  setTimeout(() => {
+                    navigate("/login");
+                  }, 2000);
                 }}
               >
                 Log out
@@ -130,92 +138,93 @@ const Header = () => {
         </div>
       </nav>
 
-      {/* Mobile menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-200">
-          <div className="space-y-1 px-6 pb-6 pt-4">
-            <NavLink
-              to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive
-                  ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
-                  : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-              }
-            >
-              Home Page
-            </NavLink>
-            <NavLink
-              to="/cinema"
-              onClick={() => setMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive
-                  ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
-                  : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-              }
-            >
-              Cinema
-            </NavLink>
-            <NavLink
-              to="/news"
-              onClick={() => setMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive
-                  ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
-                  : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-              }
-            >
-              News
-            </NavLink>
-            <NavLink
-              to="/application"
-              onClick={() => setMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive
-                  ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
-                  : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-              }
-            >
-              Application
-            </NavLink>
-            <div className="border-t border-gray-200 pt-4 mt-4">
-              {userName ? (
-                <div className="space-y-2">
-                  <p
-                    className="block rounded-lg px-3 py-2 text-base font-semibold text-emerald-600 cursor-pointer hover:bg-gray-50"
-                    onClick={() => {
-                      navigate("/profile");
-                      setMobileMenuOpen(false);
-                    }}
+      {/* <div>
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-white border-t border-gray-200">
+            <div className="space-y-1 px-6 pb-6 pt-4">
+              <NavLink
+                to="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
+                    : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
+                }
+              >
+                Home Page
+              </NavLink>
+              <NavLink
+                to="/cinema"
+                onClick={() => setMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
+                    : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
+                }
+              >
+                Cinema
+              </NavLink>
+              <NavLink
+                to="/news"
+                onClick={() => setMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
+                    : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
+                }
+              >
+                News
+              </NavLink>
+              <NavLink
+                to="/application"
+                onClick={() => setMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "block rounded-lg px-3 py-2 text-base font-semibold text-red-500"
+                    : "block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
+                }
+              >
+                Application
+              </NavLink>
+              <div className="border-t border-gray-200 pt-4 mt-4">
+                {userName ? (
+                  <div className="space-y-2">
+                    <p
+                      className="block rounded-lg px-3 py-2 text-base font-semibold text-emerald-600 cursor-pointer hover:bg-gray-50"
+                      onClick={() => {
+                        navigate("/profile");
+                        setMobileMenuOpen(false);
+                      }}
+                    >
+                      Hello, {userName}
+                    </p>
+                    <button
+                      type="button"
+                      className="block w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-red-500 hover:bg-gray-50"
+                      onClick={() => {
+                        removeKeyLocalStorage("userInfo");
+                        dispatch(updateUserName(""));
+                        navigate("/login");
+                        setMobileMenuOpen(false);
+                      }}
+                    >
+                      Log out
+                    </button>
+                  </div>
+                ) : (
+                  <NavLink
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
                   >
-                    Hello, {userName}
-                  </p>
-                  <button
-                    type="button"
-                    className="block w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-red-500 hover:bg-gray-50"
-                    onClick={() => {
-                      removeKeyLocalStorage("userInfo");
-                      dispatch(updateUserName(""));
-                      navigate("/login");
-                      setMobileMenuOpen(false);
-                    }}
-                  >
-                    Log out
-                  </button>
-                </div>
-              ) : (
-                <NavLink
-                  to="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Login / Sign up
-                </NavLink>
-              )}
+                    Login / Sign up
+                  </NavLink>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div> */}
     </header>
   );
 };

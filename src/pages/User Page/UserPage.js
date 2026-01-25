@@ -30,23 +30,21 @@ const UserPage = () => {
       return;
     }
     const accountId = getLocalStorage("userInfo").taiKhoan;
-    console.log("accountId", accountId);
 
     userServ
       .fetchUserData_User(accountId)
       .then((result) => {
         console.log("result", result);
-        setUserData(result.content);
+        setUserData(result.data.content);
         dispatch(endedLoading());
       })
       .catch((err) => {
-        console.log("err", err);
         dispatch(endedLoading());
       });
-  }, []);
+  }, [dispatch, navigate]);
 
   return (
-    <div className="min-h-screen mt-10">
+    <div className="min-h-screen pt-10 bg-white">
       <h1 className="uppercase text-3xl text-center font-bold">{title}</h1>
       <div
         className="container mx-auto p-5 rounded-lg my-5"
@@ -63,7 +61,7 @@ const UserPage = () => {
               key: index,
               children: (
                 <>
-                  {index == 0 ? (
+                  {index === 0 ? (
                     <UpdateUserInformation userData={userData} />
                   ) : (
                     // <div className="grid grid-cols-3">

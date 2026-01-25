@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
@@ -19,7 +18,6 @@ const AdminTemplate = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const location = useLocation();
-  console.log(location.pathname);
 
   useEffect(() => {
     if (userInfo) {
@@ -30,7 +28,7 @@ const AdminTemplate = () => {
         window.location.href = "https://www.google.com";
       }
     }
-  }, [location.pathname]);
+  }, [location.pathname, navigate, userInfo]);
 
   return (
     <Layout className="min-h-screen!">

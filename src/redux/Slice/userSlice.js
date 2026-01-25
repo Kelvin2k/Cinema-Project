@@ -1,8 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  isRejectedWithValue,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { userServ } from "../../services/userServ";
 import { getLocalStorage } from "../../utils/local";
 
@@ -22,7 +18,7 @@ export const loginUser = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response.data.message);
     }
-  }
+  },
 );
 
 const userSlice = createSlice({
@@ -41,8 +37,8 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      console.log("hello");
       state.userName = action.payload.hoTen;
+      state.userInfo = action.payload.userInfo;
     });
   },
 });

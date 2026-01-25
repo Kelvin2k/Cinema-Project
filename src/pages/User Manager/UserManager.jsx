@@ -1,26 +1,59 @@
-import { Tabs } from "antd";
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { Flex, Space, Table, Tag } from "antd";
+import { Table } from "antd";
 import { userServ } from "../../services/userServ";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import "./UserManger.css";
 import Manager_AddUser from "./Manager_AddUser";
 import Manager_UpdateUser from "./Manager_UpdateUser";
+import { Button, message, Popconfirm, Space } from "antd";
 
 const UserManager = () => {
+  const [messageApi] = message.useMessage();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
+
+  const confirm = (e, taiKhoan) => {
+    userServ
+      .removeUser(taiKhoan)
+      .then((result) => {
+        openNotificationWithIcon(
+          "success",
+          "Delete User Successful",
+          "User has been deleted successfully.",
+        );
+        userServ
+          .fetchUserDataList()
+          .then((result) => {
+            setUserList(result.data.content);
+          })
+          .catch((err) => {});
+      })
+      .catch((err) => {
+        const errMsg =
+          err?.response?.data?.message ||
+          "Failed to add user. Please try again.";
+        openNotificationWithIcon("error", "Delete User Failed", errMsg);
+      });
+  };
+  const cancel = (e) => {
+    messageApi.error("Click on No");
+  };
+
   const [userList, setUserList] = useState([]);
   const [searchInputValue, setSearchInputValue] = useState("");
   useEffect(() => {
     userServ
       .fetchUserDataList()
       .then((result) => {
-        console.log("result", result.data.content);
         setUserList(result.data.content);
       })
-      .catch((err) => {
-        console.log("err", err);
-      });
+      .catch((err) => {});
   }, []);
 
   const columns = [
@@ -29,7 +62,7 @@ const UserManager = () => {
       dataIndex: "taiKhoan",
 
       key: "taiKhoan",
-      render: (text) => <a>{text}</a>,
+      render: (text) => <span>{text}</span>,
     },
     {
       title: "User Name",
@@ -64,29 +97,18 @@ const UserManager = () => {
       width: "100px",
       render: (_, record) => (
         <div className="space-x-2">
-          <i
-            className="fa-solid fa-trash text-red-500 text-lg cursor-pointer hover:text-xl duration-200"
-            onClick={() => {
-              console.log("record", record.taiKhoan);
-              userServ
-                .removeUser(record.taiKhoan)
-                .then((result) => {
-                  console.log("result", result);
-                  userServ
-                    .fetchUserDataList()
-                    .then((result) => {
-                      console.log("result", result.data.content);
-                      setUserList(result.data.content);
-                    })
-                    .catch((err) => {
-                      console.log("err", err);
-                    });
-                })
-                .catch((err) => {
-                  console.log("err", err);
-                });
+          <Popconfirm
+            title="Delete the task"
+            description="Are you sure to delete this user?"
+            onConfirm={(e) => {
+              confirm(e, record.taiKhoan);
             }}
-          ></i>
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <i className="fa-solid fa-trash text-red-500 text-lg cursor-pointer hover:text-xl duration-200"></i>
+          </Popconfirm>
           <i
             className="fa-solid fa-pen-to-square text-lime-700 text-lg cursor-pointer hover:text-xl duration-200"
             onClick={() => {
@@ -94,12 +116,9 @@ const UserManager = () => {
               userServ
                 .fetchUserData_Admin(record.taiKhoan)
                 .then((result) => {
-                  console.log("result", result);
                   setUserDataUpdate(result.data.content);
                 })
-                .catch((err) => {
-                  console.log("err", err);
-                });
+                .catch((err) => {});
             }}
           ></i>
         </div>
@@ -117,8 +136,6 @@ const UserManager = () => {
     setOpenAdd(true);
   };
   const showModalUpdate = () => {
-    console.log("test");
-
     setOpenUpdate(true);
   };
   // const handleOk = () => {
@@ -132,21 +149,18 @@ const UserManager = () => {
 
   return (
     <>
+      {contextHolder}
       <div className="container mx-auto">
         <form
           className="w-full mt-5 mx-auto"
           onSubmit={(e) => {
             e.preventDefault();
-            console.log("searchInputValue", searchInputValue);
             userServ
               .findUser(searchInputValue)
               .then((result) => {
-                console.log("result", result.data.content);
                 setUserList(result.data.content);
               })
-              .catch((err) => {
-                console.log("err", err);
-              });
+              .catch((err) => {});
           }}
         >
           <div className="w-full mx-auto mb-5 grid grid-cols-2">
@@ -176,6 +190,7 @@ const UserManager = () => {
                 </>
               )}
             >
+              {/* eslint-disable-next-line react/jsx-pascal-case */}
               <Manager_AddUser
                 setOpenAdd={setOpenAdd}
                 setUserList={setUserList}
@@ -192,6 +207,7 @@ const UserManager = () => {
                 </>
               )}
             >
+              {/* eslint-disable-next-line react/jsx-pascal-case */}
               <Manager_UpdateUser
                 userDataUpdate={userDataUpdate}
                 setOpenUpdate={setOpenUpdate}

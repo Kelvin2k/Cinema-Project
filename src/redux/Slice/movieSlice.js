@@ -4,7 +4,6 @@ import { filmServManagement } from "../../services/filmServManagement";
 export const getAllMovieThunk = createAsyncThunk(
   "movie/getAllMovieThunk",
   async (data, thunkAPI) => {
-    console.log("data", data);
     const result = await filmServManagement.getAllMovie();
     return result.data.content;
   }
@@ -24,13 +23,12 @@ const movieSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getAllMovieThunk.fulfilled, (state, action) => {
-      console.log(state);
-      console.log(action);
+
       state.listMovie = action.payload;
     });
   },
 });
 
-export const {} = movieSlice.actions;
+// export const {} = movieSlice.actions;
 
 export default movieSlice.reducer;

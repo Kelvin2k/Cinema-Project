@@ -6,15 +6,23 @@ export const cinemaSchedule = {
   },
   getMovieShowTime: (movieCode) => {
     return https.get(
-      `/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${movieCode}`
+      `/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${movieCode}`,
     );
   },
   getShowTimeSeat: (showTimeCode) => {
     return https.get(
-      `/api/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${showTimeCode}`
+      `/api/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${showTimeCode}`,
     );
   },
   bookTicket: (data) => {
     return https.post("/api/QuanLyDatVe/DatVe", data);
+  },
+  getClusterInfoBySystem: (clusterName) => {
+    return https.get(
+      `/api/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${clusterName}`,
+    );
+  },
+  createShowTime: (data) => {
+    return https.post("/api/QuanLyDatVe/TaoLichChieu", data);
   },
 };

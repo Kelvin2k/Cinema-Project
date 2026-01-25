@@ -1,59 +1,107 @@
 import React, { useEffect, useState } from "react";
-import { Carousel, Modal } from "antd";
+import { Modal } from "antd";
 import { filmServManagement } from "../../services/filmServManagement";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import styles from "./hotMovie.css";
-import { Link, useLocation } from "react-router-dom";
+import "./hotMovie.css";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { endedLoading, startedLoading } from "../../redux/Slice/loadingSlice";
 
 const HotMovie = () => {
   const [hotMovie, setHotMovie] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const location = useLocation();
-  console.log("location", location.pathname);
+  const [showSlides, setShowSlides] = useState(0);
+  const dispatch = useDispatch();
 
   const handlePlayClick = (movie) => {
-    // Thêm function này
     setSelectedMovie(movie);
     setIsModalOpen(true);
   };
-  const contentStyle = {
-    margin: 0,
-    minHeight: "300px",
-    color: "#fff",
-    lineHeight: "160px",
-    textAlign: "center",
-    background: "#364d79",
-  };
   useEffect(() => {
+    dispatch(startedLoading());
     filmServManagement
       .getMovieList()
       .then((result) => {
-        console.log("result", result.data.content);
         setHotMovie(result.data.content);
+        dispatch(endedLoading());
       })
       .catch((err) => {
-        console.log("err", err);
+        dispatch(endedLoading());
       });
+  }, [dispatch]);
+
+  useEffect(() => {
+    const updateSlides = () => {
+      const w = window.innerWidth;
+      console.log(w);
+      if (w < 768) setShowSlides(1);
+      else if (w < 1280) setShowSlides(2);
+      else setShowSlides(3);
+    };
+    updateSlides();
+    window.addEventListener("resize", updateSlides);
+    return () => window.removeEventListener("resize", updateSlides);
   }, []);
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: showSlides || 3,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+    ],
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  // kiểm tra tràn ngang / dọc
+  console.log(
+    "scrollWidth>clientWidth?",
+    document.documentElement.scrollWidth > document.documentElement.clientWidth,
+  );
+  console.log(
+    "scrollHeight>clientHeight?",
+    document.documentElement.scrollHeight >
+      document.documentElement.clientHeight,
+  );
 
+  // liệt các phần tử rộng hơn viewport
+  Array.from(document.querySelectorAll("*"))
+    .filter((el) => el.scrollWidth > document.documentElement.clientWidth)
+    .map((el) => ({
+      tag: el.tagName,
+      id: el.id,
+      cls: el.className,
+      sw: el.scrollWidth,
+    }));
   return (
-    <div className="container mx-auto">
-      <h2 className="font-bold text-2xl text-center my-5">Hot Movie</h2>
+    <div className="overflow-hidden" id="hot_movie">
+      <h2 className="text-3xl md:text-5xl text-center font-bold uppercase text-red-500 my-5">
+        Hot Movie
+      </h2>
       <Slider {...settings}>
         {hotMovie?.map((movie, index) => {
           return (
@@ -79,18 +127,23 @@ const HotMovie = () => {
                 <span className="text-white bg-red-500 rounded-sm px-2 py-2 mr-3">
                   C18
                 </span>
-                <Link to={`/detail_movie/${movie.maPhim}`}>
+                <Link
+                  to={`/detail_movie/${movie.maPhim}`}
+                  className="text-white hover:text-red-500 duration-200"
+                >
                   {movie.tenPhim}
                 </Link>
               </p>
-              <p className="description line-clamp-3 text-gray-500">
+              <p className="description line-clamp-3 text-gray-300">
                 {movie.moTa}
               </p>
-              <Link to={`/detail_movie/${movie.maPhim}`}>
-                <button className="bg-red-500 text-white px-4 py-2 rounded mt-5 cursor-pointer hover:bg-red-700 duration-300">
-                  Buy Now
-                </button>
-              </Link>
+              <div className="flex justify-center items-center md:block">
+                <Link to={`/detail_movie/${movie.maPhim}`}>
+                  <button className="bg-red-500 text-white px-4 py-2 rounded mt-5 cursor-pointer hover:bg-red-700 duration-300 mb-5 md:mb-0">
+                    Buy Now
+                  </button>
+                </Link>
+              </div>
             </div>
           );
         })}

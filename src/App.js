@@ -1,4 +1,3 @@
-import { DatePicker } from "antd";
 import { Route, Routes } from "react-router-dom";
 import UserTemplate from "./templates/UserTemplate/UserTemplate";
 import HomePage from "./pages/HomePage/HomePage";
@@ -14,6 +13,7 @@ import EditMovie from "./pages/Edit Movie/EditMovie";
 import UserPage from "./pages/User Page/UserPage";
 import AddUser from "./pages/Add User/AddUser";
 import Page404 from "./pages/Page404/Page404";
+import AddShowTime from "./pages/Add Show Time/AddShowTime";
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
             element={<BookingTicket />}
             path="booking_ticket/:showTimeId"
           ></Route>
-          <Route element={<UserPage />} path="/profile"></Route>
+          <Route element={<UserPage />} path="profile"></Route>
         </Route>
         <Route element={<AdminTemplate />} path="/admin">
           <Route element={<MovieManager />} index></Route>
@@ -35,6 +35,7 @@ function App() {
           <Route element={<AddMovie />} path="add_movie"></Route>
           <Route element={<EditMovie />} path="edit_movie/:movieId"></Route>
           <Route element={<AddUser />} path="add_user"></Route>
+          <Route element={<AddShowTime />} path="add_show_time/:movieId"></Route>
         </Route>
         <Route element={<Login />} path="/login"></Route>
         <Route element={<Page404 />} path="*"></Route>

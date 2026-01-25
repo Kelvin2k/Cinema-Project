@@ -1,8 +1,8 @@
 import { Carousel } from "antd";
 import React, { useEffect, useState } from "react";
 import { filmServManagement } from "../../services/filmServManagement";
-import { useDispatch } from "react-redux";
-import { endedLoading, startedLoading } from "../../redux/Slice/loadingSlice";
+// import { useDispatch } from "react-redux";
+// import { endedLoading, startedLoading } from "../../redux/Slice/loadingSlice";
 
 const Banner = () => {
   // const contentStyle = {
@@ -14,7 +14,7 @@ const Banner = () => {
   //   background: "#364d79",
   // };
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [listBanner, setListBanner] = useState([]);
 
@@ -48,29 +48,19 @@ const Banner = () => {
   };
 
   useEffect(() => {
-    // filmServManagement
-    //   .getAllBanner()
-    //   .then((result) => {
-    //     console.log("result");
-    //   })
-    //   .catch((err) => {
-    //     console.log("err", err);
-    //   });
-    dispatch(startedLoading());
+    // dispatch(startedLoading());
 
     const fetchBanners = async () => {
       try {
         const data = await filmServManagement.getAllBanner();
-        console.log("data", data);
         setListBanner(data.data.content);
-        dispatch(endedLoading());
+        // dispatch(endedLoading());
       } catch (error) {
-        console.log("error", error);
+        // dispatch(startedLoading());
       }
     };
     fetchBanners();
   }, []);
-  console.log("listBanner", listBanner);
 
   return (
     <Carousel
@@ -81,11 +71,11 @@ const Banner = () => {
     >
       {listBanner?.map((item, index) => {
         return (
-          <div key={item.maBanner}>
+          <div key={item.maBanner} className="w-screen">
             <img
               src={item.hinhAnh}
               alt=""
-              className="w-full h-175 object-cover"
+              className="w-full overflow-hidden h-60 sm:h-80! md:h-175! object-cover"
             />
           </div>
         );

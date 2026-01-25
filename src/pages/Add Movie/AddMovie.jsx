@@ -1,12 +1,4 @@
-import {
-  Button,
-  DatePicker,
-  Flex,
-  notification,
-  Rate,
-  Space,
-  Switch,
-} from "antd";
+import { DatePicker, notification, Rate, Switch } from "antd";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import React, { useState } from "react";
@@ -29,7 +21,6 @@ const AddMovie = () => {
       hinhAnh: "",
     },
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
 
       // values.ngayKhoiChieu = moment(values.ngayKhoiChieu).format("DD-MM-YYYY");
       const formData = new FormData();
@@ -41,12 +32,10 @@ const AddMovie = () => {
         }
       }
       formData.append("maNhom", "GP01");
-      console.log([...formData.entries()]);
 
       filmServManagement
         .addMovie(formData)
         .then((result) => {
-          console.log("result", result);
           openNotificationWithIcon(
             "success",
             "Add Movie Successful",
@@ -59,7 +48,6 @@ const AddMovie = () => {
           }, 2000);
         })
         .catch((err) => {
-          console.log("err", err);
           const errMsg =
             err.response?.data?.content ||
             "Failed to add movie. Please try again.";
@@ -74,13 +62,11 @@ const AddMovie = () => {
     handleBlur,
     handleChange,
     handleSubmit,
-    resetForm,
     setFieldValue,
     setFieldTouched,
   } = formik;
 
   const [image, setImage] = useState("");
-  console.log("values", values);
 
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, title = "", description = "") => {
@@ -167,8 +153,7 @@ const AddMovie = () => {
           </label>
           <DatePicker
             onChange={(date, dateString) => {
-              console.log(date);
-              console.log(dateString);
+
               setFieldValue("ngayKhoiChieu", dateString);
             }}
             onBlur={() => {
@@ -271,11 +256,9 @@ const AddMovie = () => {
             onBlur={handleBlur}
             accept="image/*"
             onChange={(event) => {
-              console.log(event.target.files[0]);
               const img = event.target.files[0];
               if (img) {
                 const urlImg = URL.createObjectURL(img);
-                console.log(urlImg);
                 setImage(urlImg);
               }
               setFieldValue("hinhAnh", img);

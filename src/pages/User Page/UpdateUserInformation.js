@@ -5,11 +5,17 @@ import { updateUserValidation } from "../../utils/validation";
 import { updateUserName } from "../../redux/Slice/userSlice";
 import { getLocalStorage, saveLocalStore } from "../../utils/local";
 import { userServ } from "../../services/userServ";
-import { message } from "antd";
+import { notification } from "antd";
 
 const UpdateUserInformation = ({ userData }) => {
   const dispatch = useDispatch();
-  const [messageApi, contextHolder] = message.useMessage();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -23,19 +29,23 @@ const UpdateUserInformation = ({ userData }) => {
     },
     validationSchema: updateUserValidation,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
       userServ
         .updateUserInfo_User(values)
         .then((result) => {
-          console.log("result", result);
           saveLocalStore("userInfo", result);
           dispatch(updateUserName(result.hoTen));
-          messageApi.success({ content: "Update Successfully" });
+          openNotificationWithIcon(
+            "success",
+            "Update User Successful",
+            "Your information has been updated successfully.",
+          );
           resetForm();
         })
         .catch((err) => {
-          console.log("err", err.message);
-          messageApi.error({ content: err.response.data.message });
+          const errMsg =
+            err?.response?.data?.message ||
+            "Failed to add user. Please try again.";
+          openNotificationWithIcon("error", "Update User Failed", errMsg);
         });
     },
   });
@@ -48,14 +58,13 @@ const UpdateUserInformation = ({ userData }) => {
     handleChange,
     errors,
     handleSubmit,
-    handleReset,
   } = formik;
 
   useEffect(() => {
     if (userData) {
       setValues(userData);
     }
-  }, [userData]);
+  }, [userData, setValues]);
 
   return (
     <div className="bg-neutral-primary-soft shadow-xs rounded-base border border-default p-6 grid grid-cols-2 ">
@@ -194,7 +203,7 @@ const UpdateUserInformation = ({ userData }) => {
 
         <button
           type="submit"
-          className="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none mt-3"
+          className="text-white cursor-pointer bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none mt-3"
         >
           Update
         </button>

@@ -1,19 +1,11 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { addUserValidation, signUpValidation } from "../../utils/validation";
+import { addUserValidation } from "../../utils/validation";
 import { userServ } from "../../services/userServ";
-import { saveLocalStore } from "../../utils/local";
-import { useDispatch } from "react-redux";
-import { loginUser, saveInfoUser } from "../../redux/Slice/userSlice";
-import { message } from "antd";
+import { notification } from "antd";
 
 const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordAgain, setShowPasswordAgain] = useState(false);
-  const dispatch = useDispatch();
-  const [messageApi, contextHolder] = message.useMessage();
   const formik = useFormik({
     initialValues: {
       taiKhoan: "",
@@ -26,42 +18,43 @@ const Manager_AddUser = ({ setOpenAdd, setUserList }) => {
     },
     validationSchema: addUserValidation,
     onSubmit: (values, { resetForm }) => {
-      console.log("values", values);
       userServ
         .addUser(values)
         .then((result) => {
-          console.log("result", result.data.messsage);
           setOpenAdd(false);
-          messageApi.success({ content: "Create User Successfully" });
+          openNotificationWithIcon(
+            "success",
+            "Add User Successful",
+            "User has been added successfully."
+          );
           userServ
             .fetchUserDataList()
             .then((result) => {
-              console.log("result", result.data.content);
               setUserList(result.data.content);
             })
             .catch((err) => {
-              console.log("err", err.response.data.messsage);
             });
         })
         .catch((err) => {
-          console.log("err", err.response.data.message);
-          messageApi.error({ content: err.response.data.message });
+          const errMsg =
+            err?.response?.data?.message ||
+            "Failed to add user. Please try again.";
+          openNotificationWithIcon("error", "Add User Failed", errMsg);
         });
     },
   });
 
-  const {
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    resetForm,
-    values,
-    errors,
-  } = formik;
-  console.log("values", values);
-  console.log("errors", errors);
+  const { touched, handleBlur, handleChange, handleSubmit, values, errors } =
+    formik;
 
+
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
   return (
     <div className="min-h-200 container mx-auto flex justify-center items-center">
       {contextHolder}

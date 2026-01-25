@@ -1,23 +1,18 @@
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  addUserValidation,
-  signUpValidation,
-  updateUserValidation_Admin,
-} from "../../utils/validation";
+import { updateUserValidation_Admin } from "../../utils/validation";
 import { userServ } from "../../services/userServ";
-import { saveLocalStore } from "../../utils/local";
-import { useDispatch } from "react-redux";
-import { loginUser, saveInfoUser } from "../../redux/Slice/userSlice";
-import { message } from "antd";
+import { notification } from "antd";
 
 const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordAgain, setShowPasswordAgain] = useState(false);
-  const dispatch = useDispatch();
-  const [messageApi, contextHolder] = message.useMessage();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type, title = "", description = "") => {
+    api[type]({
+      title: title,
+      description: description,
+    });
+  };
   const formik = useFormik({
     initialValues: {
       taiKhoan: "",
@@ -30,26 +25,28 @@ const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
     },
     validationSchema: updateUserValidation_Admin,
     onSubmit: (values, { resetForm }) => {
-      console.log("values", values);
       userServ
         .updatUserInfo_Admin(values)
         .then((result) => {
-          console.log("result", result);
           setOpenUpdate(false);
-          messageApi.success({ content: "Update User Successfully" });
+          openNotificationWithIcon(
+            "success",
+            "Update User Successful",
+            "User has been updated successfully."
+          );
           userServ
             .fetchUserDataList()
             .then((result) => {
-              console.log("result", result.data.content);
               setUserList(result.data.content);
             })
             .catch((err) => {
-              console.log("err", err);
             });
         })
         .catch((err) => {
-          console.log("err", err);
-          messageApi.error({ content: err.response.data.message });
+          const errMsg =
+            err?.response?.data?.message ||
+            "Failed to add user. Please try again.";
+          openNotificationWithIcon("error", "Update User Failed", errMsg);
         });
     },
   });
@@ -59,17 +56,15 @@ const Manager_UpdateUser = ({ userDataUpdate, setOpenUpdate, setUserList }) => {
     handleBlur,
     handleChange,
     handleSubmit,
-    resetForm,
     values,
     errors,
     setValues,
   } = formik;
-  console.log("values", values);
-  console.log("errors", errors);
+
 
   useEffect(() => {
     setValues(userDataUpdate);
-  }, [userDataUpdate]);
+  }, [userDataUpdate, setValues]);
 
   return (
     <div className="min-h-200 container mx-auto flex justify-center items-center">

@@ -18,7 +18,7 @@ export const signUpValidation = yup.object({
     .required("Please do not leave this field empty")
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Invalid email format"
+      "Invalid email format",
     ),
   soDt: yup
     .string()
@@ -35,7 +35,7 @@ export const updateUserValidation = yup.object({
     .required("Please do not leave this field empty")
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Invalid email format"
+      "Invalid email format",
     ),
   soDT: yup
     .string()
@@ -52,7 +52,7 @@ export const addUserValidation = yup.object({
     .required("Please do not leave this field empty")
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Invalid email format"
+      "Invalid email format",
     ),
   soDt: yup
     .string()
@@ -72,7 +72,7 @@ export const updateUserValidation_Admin = yup.object({
     .required("Please do not leave this field empty")
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Invalid email format"
+      "Invalid email format",
     ),
   soDT: yup
     .string()
@@ -81,4 +81,11 @@ export const updateUserValidation_Admin = yup.object({
   maLoaiNguoiDung: yup
     .string()
     .required("Please do not leave this field empty"),
+});
+
+export const validateCreateShowTime = yup.object({
+  maHeThongRap: yup.string().required("Please do not leave this field empty"),
+  maRap: yup.string().required("Please do not leave this field empty"),
+  ngayChieuGioChieu: yup.string().required("Please do not leave this field empty"),
+  giaVe: yup.string().required("Please do not leave this field empty")
 });
